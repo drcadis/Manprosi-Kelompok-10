@@ -12,7 +12,7 @@ class ItemController extends Controller
     {
         return view('lapor-hilang');
     }
-
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -23,10 +23,10 @@ class ItemController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
+            if (!$request->wantsJson()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
         }
 
         $pathFoto = null;
@@ -42,10 +42,15 @@ class ItemController extends Controller
             'tipe'        => 'kehilangan',
         ]);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data berhasil masuk database!',
-            'data' => $item
-        ], 201);
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil masuk database!',
+                'data' => $item
+            ], 201);
+        }
+        
+        return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
+    
 }
