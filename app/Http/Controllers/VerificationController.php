@@ -4,68 +4,94 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Verification;
-use App\Models\Item; // Pastikan model Item ada
+use App\Models\Item;
 
 class VerificationController extends Controller
 {
-    // 1. Fungsi Mengajukan Verifikasi (User mengklaim barang)
+    // === 1. FUNGSI UNTUK MENGAJUKAN KLAIM (POST) ===
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'user_id' => 'required|integer',
-            'item_id' => 'required|integer',
+        // Validasi Input
+        $validated = $request->validate([
+            'item_id' => 'required|exists:items,id',
+            'name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'address' => 'required|string',
+            'identity_card_image' => 'required|image|max:2048', // Foto KTP/KTM
             'proof_description' => 'required|string',
+            'proof_image' => 'required|image|max:2048', // Foto Bukti
         ]);
 
-        // Simpan ke database
+        // Upload Foto KTP
+        $identityPath = null;
+        if ($request->hasFile('identity_card_image')) {
+            $identityPath = $request->file('identity_card_image')->store('identities', 'public');
+        }
+
+        // Upload Foto Bukti Barang
+        $proofPath = null;
+        if ($request->hasFile('proof_image')) {
+            $proofPath = $request->file('proof_image')->store('proofs', 'public');
+        }
+
+        // Simpan ke Database
         $verification = Verification::create([
-            'user_id' => $request->user_id,
-            'item_id' => $request->item_id,
-            'proof_description' => $request->proof_description,
-            'status' => 'pending'
+            'item_id' => $validated['item_id'],
+            'name' => $validated['name'],
+            'phone_number' => $validated['phone_number'],
+            'address' => $validated['address'],
+            'identity_card_image' => $identityPath,
+            'proof_description' => $validated['proof_description'],
+            'proof_image' => $proofPath,
+            'status' => 'pending',
         ]);
 
-        // Return berupa View HTML (sesuai request)
-        return view('verification.success_claim', ['data' => $verification]);
+        return response()->json([
+            'message' => 'Klaim berhasil diajukan! Menunggu verifikasi admin.',
+            'data' => $verification
+        ], 201);
     }
 
+    // === 2. FUNGSI UNTUK APPROVE / REJECT (PUT) ===
     public function update(Request $request, $id)
     {
-        // 1. Cari data verifikasi
+        // Cari data klaim
         $verification = Verification::find($id);
 
         if (!$verification) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            return response()->json(['message' => 'Data verification not found'], 404);
         }
 
-        // 2. Validasi input (Admin harus kirim status: 'approved' atau 'rejected')
-        // Jika tidak kirim status, default-nya jadi 'approved' (opsional)
-        $status = $request->input('status', 'approved'); 
+        // Validasi status & alasan penolakan
+        $request->validate([
+            'status' => 'required|in:approved,rejected,pending',
+            'rejection_reason' => 'required_if:status,rejected|string|nullable' 
+        ]);
 
-        // Pastikan hanya boleh 'approved' atau 'rejected'
-        if (!in_array($status, ['approved', 'rejected'])) {
-             return response()->json(['message' => 'Status tidak valid'], 400);
+        // Update status
+        $verification->status = $request->status;
+
+        // Simpan alasan jika ditolak
+        if ($request->status == 'rejected') {
+            $verification->rejection_reason = $request->rejection_reason;
+        } else {
+            $verification->rejection_reason = null;
         }
 
-        // 3. Simpan perubahan status verifikasi
-        $verification->status = $status;
         $verification->save();
 
-        // 4. Logika Otomatis: Update status Barang (Items)
-        // Jika klaim disetujui, barang dianggap sudah kembali (returned)
-        if ($status === 'approved') {
-            // Asumsi relasi di model Verification adalah 'item'
-            // Jika nama relasi di model Anda berbeda, sesuaikan (misal: $verification->barang)
-            if ($verification->item) {
-                $verification->item->update(['status' => 'returned']);
+        // status barang jadi 'returned' apabila diubah
+        if ($request->status == 'approved') {
+            $item = Item::find($verification->item_id);
+            if ($item) {
+                $item->status = 'returned'; 
+                $item->save();
             }
         }
 
-        // 5. Return JSON agar enak dilihat di Postman
         return response()->json([
-            'message' => 'Status berhasil diubah menjadi: ' . $status,
+            'message' => 'Status updated successfully',
             'data' => $verification
-        ], 200);
+        ]);
     }
 }

@@ -12,22 +12,23 @@ class Verification extends Model
     protected $table = 'verifications';
 
     protected $fillable = [
-        'user_id',
         'item_id',
+        'name',                 // Ganti user_id jadi name
+        'phone_number',
+        'address',
+        'identity_card_image',  // Tambahan foto identitas
         'proof_description',
+        'proof_image',
         'status',
+        'rejection_reason'
     ];
 
-    // Relasi ke User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // HAPUS fungsi user() karena sudah tidak ada relasi ke tabel users
+    // public function user() { ... } 
 
-    // Relasi ke Item (Barang)
+    // Relasi ke Item tetap ada
     public function item()
     {
-        // Asumsi nama model barangmu adalah Item
-        return $this->belongsTo(Item::class); 
+        return $this->belongsTo(Item::class);
     }
 }
