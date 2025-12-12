@@ -14,13 +14,10 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('nama_barang');
-            $table->text('deskripsi')->nullable();
             $table->string('foto_barang')->nullable();
             $table->string('lokasi');
             $table->date('tanggal');
-            $table->date('tanggal_ditemukan')->nullable();
-            $table->enum('tipe', ['kehilangan', 'temuan'])->default('kehilangan');
-            $table->enum('status', ['hilang', 'ditemukan', 'diklaim'])->default('hilang');
+            $table->enum('tipe', ['kehilangan', 'ditemukan']);
             $table->timestamps();
         });
     }

@@ -11,6 +11,3 @@ Route::get('/user', function (Request $request) {
 // Route untuk melihat barang hilang
 Route::get('/melihat-barang', [lookController::class, 'index']);
 Route::get('/melihat-barang/{id}', [lookController::class, 'show']);
-
-// Jika masih ada fitur lapor hilang
-// Route::post('/lapor-hilang', [lookController::class, 'store']);

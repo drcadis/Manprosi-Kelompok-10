@@ -16,17 +16,9 @@ class lookController extends Controller
             $query->where('lokasi', 'like', '%' . $request->lokasi . '%');
         }
 
-        // Filter berdasarkan tanggal
-        if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('tanggal', $request->tanggal);
-        }
-
-        // Filter berdasarkan rentang tanggal
-        if ($request->has('tanggal_dari') && $request->tanggal_dari != '') {
-            $query->whereDate('tanggal', '>=', $request->tanggal_dari);
-        }
-        if ($request->has('tanggal_sampai') && $request->tanggal_sampai != '') {
-            $query->whereDate('tanggal', '<=', $request->tanggal_sampai);
+        // Filter berdasarkan kategori
+        if ($request->has('kategori') && $request->kategori != '') {
+            $query->where('kategori', 'like', '%' . $request->kategori . '%');
         }
 
         // Sorting berdasarkan tanggal terbaru
@@ -37,17 +29,25 @@ class lookController extends Controller
             ->distinct()
             ->pluck('lokasi');
 
+        // Ambil daftar kategori unik untuk dropdown filter
+        $daftarKategori = Item::where('tipe', 'kehilangan')
+            ->whereNotNull('kategori')
+            ->distinct()
+            ->pluck('kategori');
+
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
                 'status' => 'success',
                 'data' => $barangHilang,
-                'lokasi' => $daftarLokasi
+                'lokasi' => $daftarLokasi,
+                'kategori' => $daftarKategori
             ]);
         }
 
         return view('lihat-hilang', [
             'barangHilang' => $barangHilang,
             'daftarLokasi' => $daftarLokasi,
+            'daftarKategori' => $daftarKategori,
             'filter' => $request->all()
         ]);
     }

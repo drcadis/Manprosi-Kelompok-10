@@ -18,6 +18,7 @@ class ItemController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required',
             'lokasi'      => 'required',
+            'kategori'    => 'required|string',
             'tanggal'     => 'required|date',
             'foto_barang' => 'required|image|mimes:jpeg,png,jpg|max:5048',
         ]);
@@ -40,6 +41,7 @@ class ItemController extends Controller
             'lokasi'      => $request->lokasi,
             'tanggal'     => $request->tanggal,
             'tipe'        => 'kehilangan',
+            'kategori'    => $request->kategori,
         ]);
 
         if ($request->wantsJson() || $request->is('api/*')) {

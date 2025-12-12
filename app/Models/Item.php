@@ -17,5 +17,6 @@ class Item extends Model
         'lokasi',
         'tanggal',
         'tipe',
+        'kategori',
     ];
 }

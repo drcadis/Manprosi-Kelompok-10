@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Look extends Model
 {
     use HasFactory;
 
@@ -13,17 +13,9 @@ class Item extends Model
 
     protected $fillable = [
         'nama_barang',
-        'deskripsi',
         'foto_barang',
         'lokasi',
         'tanggal',
-        'tanggal_ditemukan',
         'tipe',
-        'status',
-    ];
-
-    protected $casts = [
-        'tanggal' => 'date',
-        'tanggal_ditemukan' => 'date',
     ];
 }

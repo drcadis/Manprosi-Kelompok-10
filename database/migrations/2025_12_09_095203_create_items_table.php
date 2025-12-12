@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama_barang');
             $table->string('foto_barang')->nullable();
-            $table->string('lokasi');               
-            $table->date('tanggal');                
+            $table->string('lokasi');
+            $table->date('tanggal');
             $table->enum('tipe', ['kehilangan', 'ditemukan']);
+            $table->string('kategori')->nullable()->after('tipe');
             $table->timestamps();
         });
     }
