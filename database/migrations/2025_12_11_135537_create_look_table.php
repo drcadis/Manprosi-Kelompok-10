@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('lokasi');
             $table->date('tanggal');
             $table->enum('tipe', ['kehilangan', 'ditemukan']);
-            $table->string('kategori')->nullable()->after('tipe');
             $table->timestamps();
         });
     }
