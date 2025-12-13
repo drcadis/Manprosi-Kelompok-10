@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('validation', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_barang');
+            $table->string('name');
+            $table->string('nim');
             $table->string('foto_barang')->nullable();
-            $table->string('lokasi');
-            $table->date('tanggal');
-            $table->enum('tipe', ['kehilangan', 'ditemukan']);
-            $table->string('kategori')->nullable()->after('tipe');
+            $table->string('deskripsi');
+            $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('validation');
     }
 };

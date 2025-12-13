@@ -1,0 +1,747 @@
+/* Custom Styles for TelU Lost & Found */
+
+:root {
+  --primary-red: #DC3545;
+  --dark-gray: #333;
+  --light-gray: #666;
+  --bg-light: #f8f9fa;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+  padding: 1rem 0;
+  background-color: #fff !important;
+}
+
+.navbar-brand {
+  font-size: 1.1rem;
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+  color: #333 !important;
+}
+
+.nav-link:hover {
+  color: var(--primary-red) !important;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Glass Effect Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* login & Regist */
+.modal-glass {
+            background: rgba(255, 255, 255, 0.1); /* Background transparan putih tipis */
+            backdrop-filter: blur(15px); /* Efek Blur di belakang card */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5); /* Border tipis putih */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            color: white; /* Text default putih agar kontras */
+        }
+
+        /* Judul Form (Sign In / Create Account) */
+        .glass-header {
+            font-weight: 700;
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Custom Input Fields */
+        .form-control-glass {
+            background: rgba(255, 255, 255, 0.9); /* Input agak putih agar tulisan terbaca */
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .form-control-glass:focus {
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            outline: none;
+        }
+
+        /* Warna Merah sesuai Request (#ed1e28) */
+        .btn-custom-red {
+            background-color: #ed1e28;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 25px; /* Rounded button */
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(237, 30, 40, 0.4);
+        }
+
+        .btn-custom-red:hover {
+            background-color: #c4121b;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Checkbox Custom */
+        .form-check-input:checked {
+            background-color: #ed1e28;
+            border-color: #ed1e28;
+        }
+
+        /* Link Toggle (Login <-> Register) */
+        .auth-toggle-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .auth-toggle-link:hover {
+            color: #ed1e28;
+            text-decoration: underline;
+        }
+        
+        /* Helper Text (Forgot password, dll) */
+        .helper-text {
+            color: #eee;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .helper-text:hover {
+            color: white;
+        }
+
+        /* Close button modal (X) custom warna putih */
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+/* Card Styles */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Instruction Cards */
+.card[style*="background-color: #f8f9fa"] {
+  background-color: #f8f9fa !important;
+}
+
+/* Instructions Section */
+.instructions-section {
+  padding: 60px 0;
+}
+
+.instruction-card {
+  background-color: #E5E5E5;
+  border-radius: 15px;
+  padding: 40px;
+  padding-top: 50px;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instruction-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.instruction-icon-wrapper {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  z-index: 2;
+}
+
+.instruction-icon-box {
+  width: 70px;
+  height: 70px;
+  background-color: #D0D0D0;
+  border-radius: 8px 0 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.instruction-icon-box svg {
+  position: relative;
+  z-index: 2;
+}
+
+.instruction-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.instruction-intro {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.instruction-list {
+  padding-left: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.instruction-list li {
+  margin-bottom: 15px;
+  line-height: 1.7;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.instruction-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Button Styles */
+.btn-danger {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-outline-danger {
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  color: white;
+}
+
+/* card barang hilang */
+.card-wrapper {
+  position: relative;
+/* Tinggi total card dikunci agar seragam */
+  height: 450px; 
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+/* Container Gambar (Latar Belakang) */
+.card-image-box {
+  width: 75%; /* Gambar mengambil 75% lebar dari kiri */
+  height: 100%;
+  border-radius: 20px 5px 5px 20px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+/* Kunci Ukuran Gambar (Object Fit) */
+.card-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mencegah gambar gepeng */
+  object-position: center;
+}
+
+/* Container Informasi (Kartu Putih) */
+.card-info-box {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 0; /* Menempel ke kanan */
+  transform: translateY(-50%) translateX(35px); /* Menengahkan secara vertikal */
+  width: 65%; /* Lebar kartu putih */
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Efek bayangan halus */
+  transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.card-wrapper:hover .card-info-box {
+/* Transparansi turun jadi 40% */
+  opacity: 0.4; 
+  /* Opsional: Sedikit digeser ke kanan agar efeknya makin terasa */
+  transform: translateY(-50%) translateX(45px); 
+}
+
+/* Styling Typography sesuai Gambar 2 */
+.text-req {
+  color: #ed1e28; /* Warna biru muda/teal sesuai gambar */
+}
+        
+        .btn-red {
+            background-color: #ed1e28;
+            color: white;
+            border: none;
+            padding: 10px 0;
+            border-radius: 25px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn-teal:hover {
+            background-color: #b6252a;
+            color: white;
+        }
+
+        .list-item-custom {
+            display: flex;
+            align-items: start;
+            margin-bottom: 12px;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        
+        .list-item-custom i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+/* Section Spacing */
+section {
+  padding: 4rem 0;
+}
+
+/* Statistics Icons */
+svg {
+  transition: transform 0.3s ease;
+}
+
+svg:hover {
+  transform: scale(1.1);
+}
+
+/* Testimonial Cards */
+.card.bg-opacity-90 {
+  transition: transform 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.card.bg-opacity-90:hover {
+  transform: translateY(-5px);
+}
+
+/* Testimonial Card Glassmorphism */
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  transform: translateY(-5px);
+}
+
+.testimonial-card-body {
+  padding: 1.5rem;
+}
+
+.testimonial-card-body h5 {
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.testimonial-card-body p {
+  color: #ffffff;
+}
+
+.testimonial-avatar {
+  flex-shrink: 0;
+}
+
+.testimonial-avatar img {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Item Cards with Overlay */
+.card[style*="overflow: hidden"] {
+  border-radius: 0.5rem;
+}
+
+.card img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Travel Card Style (like travel deals) */
+.travel-card-wrapper {
+  position: relative;
+  height: auto;
+}
+
+.travel-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  height: 420px;
+  margin-bottom: 20px;
+}
+
+.travel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+.travel-card-overlay {
+  position: absolute;
+  top: 420px;
+  right: 0;
+  width: auto;
+  max-width: 48%;
+  min-width: 280px;
+  z-index: 10;
+}
+
+.travel-card-overlay .bg-white {
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.travel-card-wrapper:hover .travel-card-overlay .bg-white {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Reservation Button Style */
+.btn-reservation {
+  background: linear-gradient(135deg, #5cb3cc 0%, #4a9fb8 100%);
+  color: white;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-reservation:hover {
+  background: linear-gradient(135deg, #4a9fb8 0%, #3d8ba3 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(92, 179, 204, 0.4);
+}
+
+/* Utility Class */
+.w-90 {
+  width: 90% !important;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #fff !important;
+}
+
+footer a {
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: var(--primary-red) !important;
+  text-decoration: underline !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 2rem !important;
+  }
+  
+  .display-4 {
+    font-size: 2rem;
+  }
+  
+  .display-5 {
+    font-size: 1.75rem;
+  }
+
+  .hero-section {
+    min-height: 500px !important;
+  }
+
+  .card-body {
+    padding: 2rem !important;
+  }
+
+  .travel-card {
+    height: 450px !important;
+    margin-bottom: 2rem;
+  }
+
+  .travel-card-overlay {
+    max-width: 85% !important;
+    right: 15px !important;
+    left: 15px !important;
+    bottom: 15px !important;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-red);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c82333;
+}
+
+/* Text Colors */
+.text-dark {
+  color: #333 !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-light {
+  color: #ffffff !important;
+}
+
+/* Additional Utilities */
+.lead {
+  font-weight: 400;
+}
+
+/* Carousel Dots Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.rounded-circle.bg-danger {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Login Modal Glass Effect */
+body.modal-blur {
+  overflow: hidden;
+}
+
+body.modal-blur > *:not(.modal):not(.modal-backdrop) {
+  filter: blur(10px);
+  transition: filter 0.3s ease;
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1040 !important;
+  opacity: 1 !important;
+}
+
+.modal {
+  z-index: 1055 !important;
+}
+
+.modal-dialog {
+  z-index: 1056 !important;
+  margin: 1.75rem auto;
+}
+
+.login-glass-card {
+  background: rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.3);
+  min-height: auto;
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1056 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.modal-content {
+  border: none !important;
+  background: transparent !important;
+}
+
+.modal-body {
+  position: relative;
+  z-index: 1;
+}
+
+.login-title {
+  font-size: 2.5rem !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.5px;
+}
+
+.login-input {
+  background: rgba(255, 255, 255, 1) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px 20px !important;
+  color: #333 !important;
+  font-size: 1rem !important;
+}
+
+.login-input:focus {
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+  border-color: #dc3545 !important;
+}
+
+.login-input::placeholder {
+  color: #999 !important;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.password-toggle-icon:hover {
+  color: #333;
+}
+
+.position-relative input[type="password"],
+.position-relative input[type="text"] {
+  padding-right: 45px !important;
+}
+
+.form-check-input {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.form-check-input:checked {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Modal Animation */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transform: scale(0.8) translateY(-50px);
+  opacity: 0;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal.show .login-glass-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure modal dialog is properly displayed */
+#loginModal.show .modal-dialog {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#loginModal.show .login-glass-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}

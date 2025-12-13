@@ -12,11 +12,11 @@ use Symfony\Component\Mime\Message;
 
 class AuthController extends Controller
 {
-    public function showRegistrationForm()
+    public function showRegistration()
     {
         return view('auth.register');
     }
-    public function showLoginForm()
+    public function showLogin()
     {
         if (Auth::check()) {
             return redirect()->route('dashboard');

@@ -12,13 +12,13 @@ class ItemController extends Controller
     {
         return view('lapor-hilang');
     }
-    
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required',
             'lokasi'      => 'required',
-            'kategori'    => 'required|string',
+            'kategori'    => 'required',
             'tanggal'     => 'required|date',
             'foto_barang' => 'required|image|mimes:jpeg,png,jpg|max:5048',
         ]);
@@ -51,8 +51,7 @@ class ItemController extends Controller
                 'data' => $item
             ], 201);
         }
-        
+
         return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
-    
 }
