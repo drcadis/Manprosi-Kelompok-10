@@ -22,9 +22,9 @@
             </div>
         </div>
 
-        <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data" id="laporanForm">
+        <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data" id="laporanForm">
             @csrf
-            <input type="hidden" name="tipe_laporan" id="tipeLaporan" value="mencari">
+            <input type="hidden" name="tipe_laporan" id="tipeLaporan" value="Kehilangan Barang">
 
             <!-- Step 1: Pilih Tipe -->
             <div class="step-content active" id="step-1">
@@ -45,45 +45,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group-custom">
-                            <label class="form-label-custom">Nama Pelapor</label>
-                            <input type="text" class="form-control-custom" name="nama_pelapor" placeholder="Nama Pelapor" required>
+                            <label class="form-label-custom">Nama</label>
+                            <input type="text" class="form-control-custom" name="nama" placeholder="Nama" required>
                         </div>
                     </div>
+                    
                     <div class="col-md-6">
                         <div class="form-group-custom">
-                            <label class="form-label-custom">Status Pelapor</label>
-                            <select class="form-select-custom" name="status_pelapor" required>
-                                <option value="" disabled selected>Status Pelapor</option>
-                                <option value="Mahasiswa">Mahasiswa</option>
-                                <option value="Dosen">Dosen</option>
-                                <option value="Staff">Staff/Karyawan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">No Telp yang dapat dihubungi</label>
+                            <label class="form-label-custom">No Telepon Aktif</label>
                             <input type="text" class="form-control-custom" name="no_telp" placeholder="No Telp yang dapat dihubungi" required>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Email</label>
-                            <input type="email" class="form-control-custom" name="email" placeholder="Email" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Fakultas</label>
-                            <input type="text" class="form-control-custom" name="fakultas" placeholder="Fakultas" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Program Studi</label>
-                            <input type="text" class="form-control-custom" name="program_studi" placeholder="Program studi" required>
-                        </div>
-                    </div>
+                    </div>                
+                    
                 </div>
                 <div class="form-actions-wrapper">
                     <button type="button" class="btn btn-back" onclick="goBack(1)">Back</button>
@@ -96,7 +69,7 @@
             <!-- Step 3: Detail Barang -->
             <div class="step-content" id="step-3">
                 <h3 class="form-step-title" id="step3-title">Detail Barang yang Hilang</h3>
-                <input type="hidden" name="status_barang" id="statusBarang" value="Belum Ditemukan">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group-custom">
@@ -107,24 +80,29 @@
                     <div class="col-md-6">
                         <div class="form-group-custom">
                             <label class="form-label-custom">Kategori Barang</label>
-                            <select class="form-select-custom" name="kategori_barang" required>
-                                <option value="" disabled selected>Kategori Barang</option>
-                                <option value="Elektronik">Elektronik (HP, Laptop, dll)</option>
-                                <option value="Dokumen">Dokumen (KTM, KTP, Dompet)</option>
-                                <option value="Aksesoris">Aksesoris (Kunci, Kacamata, dll)</option>
+                            <select class="form-select-custom" name="id_kategori" required>
+                                <option value="" disabled selected>Pilih Kategori Barang</option>
+
+                                @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id }}">
+                                        {{ $kat->nama_kategori }}
+                                    </option>
+                                @endforeach
+
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group-custom">
-                            <label class="form-label-custom">Tanggal Hilang</label>
-                            <input type="date" class="form-control-custom" name="tanggal_hilang" required>
+                            <label class="form-label-custom">Tanggal Hilang / Ditemukan</label>
+                            <input type="date" class="form-control-custom" name="tanggal" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group-custom">
-                            <label class="form-label-custom">Perkiraan Lokasi Hilang</label>
-                            <input type="text" class="form-control-custom" name="lokasi_hilang" placeholder="Lokasi Hilang" required>
+                            <label class="form-label-custom">Perkiraan Lokasi Hilang / Ditemukan</label>
+                            <input type="text" class="form-control-custom" name="lokasi" placeholder="Lokasi" required>
                         </div>
                     </div>
                     <div class="col-12">
@@ -135,7 +113,7 @@
                                 <label for="fotoBarang" class="file-upload-label">
                                     <i class="bi bi-cloud-upload"></i> Klik untuk mengunggah foto
                                 </label>
-                                <p class="text-muted mb-0 mt-2" style="font-size: 0.85rem;">Format yang didukung: JPG, PNG</p>
+                                <p class="text-muted mb-0 mt-2" style="font-size: 0.85rem;">Format yang didukung: jpg, png, jpeg</p>
                                 <div id="fileName" class="mt-2" style="color: #DC3545; font-weight: 600;"></div>
                             </div>
                         </div>
@@ -241,8 +219,11 @@
 
         // Set tipe laporan if provided
         if (tipe) {
-            document.getElementById('tipeLaporan').value = tipe;
-            updateFormTitles(tipe); // Update judul form berdasarkan tipe
+            if (tipe === 'mencari') {
+            document.getElementById('tipeLaporan').value = 'Kehilangan Barang';
+        } else if (tipe === 'menemukan') {
+            document.getElementById('tipeLaporan').value = 'Kehilangan Pemilik';
+        }
         }
 
         // Update progress indicator
@@ -255,29 +236,29 @@
     // Function untuk kembali ke step sebelumnya tanpa validasi
     function goBack(step) {
         goToStep(step, null, true); // skipValidation = true
-    }
+    } 
 
     // Function untuk mengupdate judul form berdasarkan tipe laporan
     function updateFormTitles(tipe) {
         const step2Title = document.getElementById('step2-title');
         const step3Title = document.getElementById('step3-title');
-        const statusBarang = document.getElementById('statusBarang');
+        const status_barang = document.getElementById('status_barang');
 
         if (tipe === 'mencari') {
             // Form untuk mencari barang hilang
             step2Title.textContent = 'Laporan Cari Barang Hilang';
             step3Title.textContent = 'Detail Barang yang Hilang';
-            statusBarang.value = 'Belum Ditemukan';
+
         } else if (tipe === 'menemukan') {
             // Form untuk menemukan barang
             step2Title.textContent = 'Laporan Menemukan Barang';
             step3Title.textContent = 'Detail Barang yang Ditemukan';
-            statusBarang.value = 'Ditemukan';
+
         }
     }
 
     function validateStep2() {
-        const requiredFields = ['nama_pelapor', 'status_pelapor', 'no_telp', 'email', 'fakultas', 'program_studi'];
+        const requiredFields = ['nama', 'no_telp'];
         let isValid = true;
 
         requiredFields.forEach(fieldName => {
@@ -298,7 +279,7 @@
     }
 
     function validateStep3() {
-        const requiredFields = ['nama_barang', 'kategori_barang', 'tanggal_hilang', 'lokasi_hilang', 'deskripsi'];
+        const requiredFields = ['nama_barang', 'id_kategori', 'tanggal', 'lokasi', 'deskripsi'];
         let isValid = true;
 
         requiredFields.forEach(fieldName => {
@@ -389,7 +370,7 @@
             // Reset form after popup
             setTimeout(function() {
                 document.getElementById('laporanForm').reset();
-                document.getElementById('tipeLaporan').value = 'mencari'; // Reset to default
+                document.getElementById('tipeLaporan').value = 'Kehilangan Barang'; // Reset to default
                 updateFormTitles('mencari'); // Reset titles to default
                 updateProgressIndicator(1);
                 document.getElementById('confirmCheckbox').checked = false;

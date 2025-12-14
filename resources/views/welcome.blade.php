@@ -4,17 +4,72 @@
 
 @section('content')
 
+<style>
+.custom-carousel-btn {
+    width: 48px;
+    height: 48px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    opacity: 1;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev.custom-carousel-btn {
+    left: -70px; /* geser ke kiri */
+}
+
+.carousel-control-next.custom-carousel-btn {
+    right: -70px; /* geser ke kanan */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+.carousel-item {
+  transition: transform 0.8s ease-in-out;
+}
+
+.carousel-item .card-wrapper {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+}
+
+.carousel-item.active .card-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousel-inner {
+  will-change: transform;
+}
+
+
+</style>
+
+
 <!-- Hero Section -->
 <section id="home" class="hero-section position-relative" style="min-height: 650px; background-image: url('/assets/images/HeloAwal.jpg'); background-size: cover; background-position: center; background-attachment: scroll;">
   <div class="container position-relative h-100">
     <div class="row h-100 align-items-center">
       <div class="col-lg-6 col-md-8">
         <div class="hero-content glass-card p-5 rounded-3">
-          <h1 class="display-4 fw-bold mb-4" style="color: #1a1a1a; line-height: 1.2;">Temukan & Kembalikan Barang!</h1>
+          @auth
+          <h1 class="display-4 fw-bold mb-4" style="color: #1a1a1a; line-height: 1.2;">Halo, {{ auth()->user()->name }} 👋</h1>
           <p class="lead mb-4" style="color: #333; line-height: 1.6; font-size: 1rem;">
             Platform terpercaya untuk melaporkan barang hilang atau ditemukan. Dari dokumen penting hingga barang pribadi, kami membantu mempertemukan pemilik dengan barangnya secara cepat dan aman.
           </p>
           <a href="{{ route('cari') }}" class="btn btn-danger px-4 py-2">Lapor Kehilangan Barang</a>
+          @endauth
+          @guest
+            <h1 class="display-4 fw-bold mb-4" style="color: #1a1a1a; line-height: 1.2;">Temukan & Kembalikan Barang!</h1>
+          <p class="lead mb-4" style="color: #333; line-height: 1.6; font-size: 1rem;">
+            Platform terpercaya untuk melaporkan barang hilang atau ditemukan. Dari dokumen penting hingga barang pribadi, kami membantu mempertemukan pemilik dengan barangnya secara cepat dan aman.
+          </p>
+          @endguest
+          
         </div>
       </div>
     </div>
@@ -29,22 +84,39 @@
                 </div>
 
                 <div id="loginSection">
-                    <h2 class="glass-header">Sign In</h2>
+                    <h2 class="glass-header">Login</h2>
                     <p class="text-center text-white-50 mb-4">Temukan & Kembalikan Barang</p>
                     
-                    <form>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
                         <div class="mb-3">
-                            <input type="email" class="form-control form-control-glass" placeholder="Email">
+                            <input type="email"
+                                  name="email"
+                                  class="form-control form-control-glass"
+                                  placeholder="Email"
+                                  required>
                         </div>
                         
                         <div class="mb-3 position-relative">
-                            <input type="password" class="form-control form-control-glass" placeholder="Password" id="loginPass">
-                            <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary" style="cursor: pointer;" onclick="togglePass('loginPass')"></i>
+                            <input type="password"
+                                  name="password"
+                                  class="form-control form-control-glass"
+                                  placeholder="Password"
+                                  id="loginPass"
+                                  required>
+
+                            <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
+                              style="cursor: pointer;"
+                              onclick="togglePass('loginPass')"></i>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <input class="form-check-input"
+                                      type="checkbox"
+                                      name="remember"
+                                      id="rememberMe">
                                 <label class="form-check-label text-white" style="font-size: 0.9rem;" for="rememberMe">
                                     Remember me
                                 </label>
@@ -61,47 +133,85 @@
                     </form>
                 </div>
 
-                <div id="registerSection" class="d-none"> <h2 class="glass-header">Create Account</h2>
+
+                <div id="registerSection" class="d-none">
+                    <h2 class="glass-header">Create Account</h2>
                     
-                    <form>
-                        <div>
-                            <input type="text" class="form-control form-control-glass" placeholder="Name">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="mb-3">
+                            <input type="text"
+                                  name="name"
+                                  class="form-control form-control-glass"
+                                  placeholder="Name"
+                                  required>
                         </div>
 
-                        <div>
-                            <input type="text" class="form-control form-control-glass" placeholder="Username">
-                        </div>
-
-                        <div>
-                            <input type="text" class="form-control form-control-glass" placeholder="NIM">
-                        </div>
-
-                        <div>
-                            <input type="email" class="form-control form-control-glass" placeholder="Email">
+                        <div class="mb-3">
+                            <input type="email"
+                                  name="email"
+                                  class="form-control form-control-glass"
+                                  placeholder="Email"
+                                  required>
                         </div>
                         
                         <div class="position-relative mb-3">
-                            <input type="password" class="form-control form-control-glass" placeholder="Password" id="regPass">
+                            <input type="password"
+                                  name="password"
+                                  class="form-control form-control-glass"
+                                  placeholder="Password"
+                                  id="regPass"
+                                  required>
                         </div>
 
+                        {{-- Confirm password hanya UI --}}
                         <div class="position-relative mb-3">
-                            <input type="password" class="form-control form-control-glass" placeholder="Confirm Password" id="regConfirmPass">
+                            <input type="password"
+                                  name="password_confirmation"
+                                  class="form-control form-control-glass"
+                                  placeholder="Confirm Password"
+                                  id="regConfirmPass">
                         </div>
 
                         <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="agreeTerms">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
                             <label class="form-check-label text-white" style="font-size: 0.85rem;" for="agreeTerms">
                                 Accept all terms & Conditions
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-custom-red mb-3">Create Account</button>
+                        <button type="submit" class="btn btn-custom-red mb-3">
+                            Create Account
+                        </button>
                         
                         <div class="text-center">
                             <span class="text-white-50" style="font-size: 0.9rem;">Already have account? </span>
                             <a onclick="switchForm('login')" class="auth-toggle-link fw-bold">Login</a>
                         </div>
                     </form>
+                </div>
+
+                <!-- Register Success Modal -->
+                <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-center p-4">
+
+                            <div class="modal-body">
+                                <h4 class="text-success mb-3">🎉 Registrasi Berhasil!</h4>
+                                <p class="text-muted mb-4">
+                                    Akun kamu berhasil dibuat. Silakan login untuk melanjutkan.
+                                </p>
+
+                                <button class="btn btn-danger w-100"
+                                        data-bs-dismiss="modal"
+                                        onclick="openLoginModal()">
+                                    Login Sekarang
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -122,7 +232,7 @@
 <!-- Welcome Section -->
 <section class="py-5 bg-white">
   <div class="container text-center">
-    <h2 class="display-5 fw-bold mb-2" style="color: #666; font-size: 2.5rem;">Wellcome to TelU Lost & Found</h2>
+    <h2 class="display-5 fw-bold mb-2" style="color: #666; font-size: 2.5rem;">Welcome to TelU Lost & Found</h2>  
     <p class="lead" style="color: #999; font-size: 1.1rem;">Layanan Pengaduan Kehilangan dan Penemuan Barang</p>
   </div>
 </section>
@@ -222,192 +332,204 @@
 <!-- Search Items Section -->
 <section id="product" class="py-5 bg-white" style="border-top: 1px solid #959597;">
   <div class="container">
+
+    <!-- Heading -->
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold mb-3" style="color: #666; font-size: 2.5rem;">Cari Barangmu Disini</h2>
-      <p class="lead mb-0" style="color: #999; font-size: 1rem; max-width: 800px; margin: 0 auto;">Kamu bisa mencari barang kamu yang hilang disini, jika tidak ada bisa memilih Lihat Lebih Banyak, semoga barang kamu yang hilang ada disini yak</p>
+      <h2 class="display-5 fw-bold mb-3" style="color: #666; font-size: 2.5rem;">
+        Cari Barangmu Disini
+      </h2>
+      <p class="lead mb-0" style="color: #999; font-size: 1rem; max-width: 800px; margin: 0 auto;">
+        Kamu bisa mencari barang kamu yang hilang di sini.
+      </p>
     </div>
-    
-    <!-- Item Cards Carousel -->
-    <div class="container">
-        <div class="row justify-content-center gap-5">
-            <div class="col-lg-5 col-md-10">
-                <div class="card-wrapper">
+
+    <!-- Carousel -->
+    <div class="position-relative">
+    <div id="searchItemCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+      @if(isset($pemilik) && $pemilik->count())
+        @foreach ($pemilik->chunk(2) as $index => $chunk)
+          <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+            <div class="row justify-content-center gap-5">
+
+              @foreach ($chunk as $item)
+                <div class="col-lg-5 col-md-10">
+                  <div class="card-wrapper">
+
+                    <!-- Image -->
                     <div class="card-image-box">
-                        <img src="/assets/images/ktm-dummy.jpg" alt="Foto Mahasiswa">
+                      <img 
+                        src="{{ $item->foto_barang 
+                            ? asset('storage/'.$item->foto_barang) 
+                            : asset('assets/images/Missing.jpg') }}"
+                        alt="{{ $item->nama_barang }}">
                     </div>
 
+                    <!-- Info -->
                     <div class="card-info-box">
-                        <h4 class="fw-bold text-dark mb-1">KTM Nafi Azzahra</h4>
-                        
-                        <div class="mb-3">
-                            <span class="fw-bold text-red fs-5">FEB</span> 
-                            <span class="text-secondary">/lantai 3</span>
-                        </div>
-                        
-                        <div class="text-secondary mb-3">
-                            <i class="bi bi-people me-2"></i> 234 Laporan
-                        </div>
+                      <h4 class="fw-bold text-dark mb-1">
+                        {{ $item->nama_barang }}
+                      </h4>
 
-                        <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
+                      <div class="mb-3">
+                        <span class="fw-bold text-danger fs-5">
+                          {{ $item->kategori->nama_kategori }}
+                        </span>
+                        <span class="text-secondary">
+                          / {{ $item->lokasi }}
+                        </span>
+                      </div>
 
-                        <div class="list-item-custom">
-                            <i class="bi bi-arrow-left-right"></i>
-                            <span>Lantai 3 Gedung FEB</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-layers"></i>
-                            <span>31 Desember 2026</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Status: Belum Ditemukan</span>
-                        </div>
+                      <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
 
-                        <button class="btn btn-red mt-2">Lihat Detail</button>
+                      <div class="list-item-custom">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>{{ $item->lokasi }}</span>
+                      </div>
+
+                      <div class="list-item-custom">
+                        <i class="bi bi-calendar"></i>
+                        <span>
+                          {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
+                        </span>
+                      </div>
+
+                      <div class="list-item-custom">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Status: {{ ucfirst($item->status_barang) }}</span>
+                      </div>
+
+                      <a href="{{ route('items.show', $item->id) }}" class="btn btn-red mt-3">
+                        Lihat Detail
+                      </a>
                     </div>
+
+                  </div>
                 </div>
+              @endforeach
+              
             </div>
+          </div>
+        @endforeach
+      @endif
+      </div>
 
-            <div class="col-lg-5 col-md-10">
-                <div class="card-wrapper">
-                    <div class="card-image-box">
-                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop" alt="Foto Buku">
-                    </div>
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="prev" style="left:-50px">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
 
-                    <div class="card-info-box">
-                        <h4 class="fw-bold text-dark mb-1">Dompet Hilang</h4>
-                        
-                        <div class="mb-3">
-                            <span class="fw-bold text-red fs-5">FTE</span> 
-                            <span class="text-secondary">/Gedung A</span>
-                        </div>
-                        
-                        <div class="text-secondary mb-3">
-                            <i class="bi bi-people me-2"></i> 12 Laporan
-                        </div>
-
-                        <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
-
-                        <div class="list-item-custom">
-                            <i class="bi bi-arrow-left-right"></i>
-                            <span>Kantin Pusat</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-layers"></i>
-                            <span>12 Januari 2024</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Status: Ditemukan</span>
-                        </div>
-
-                        <button class="btn btn-red mt-2">Lihat Detail</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <button class="carousel-control-next" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="next" style="right:-90px">
+        <span class="carousel-control-next-icon"></span>
+      </button>
     </div>
-    
-    <div class="text-center">
-      <a href="#" class="btn btn-danger btn-lg px-5">Lihat Lebih Banyak →</a>
     </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-5">
+      <a href="{{ route('home') }}" class="btn btn-danger btn-lg px-5">
+        Lihat Lebih Banyak →
+      </a>
+    </div>
+
   </div>
 </section>
+
+
 
 <!-- Found Items Section -->
-<section class="py-5 bg-white" style="border-top: 2px solid #959597";>
+<section class="py-5 bg-white" style="border-top: 2px solid #959597;">
   <div class="container">
+
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold mb-3" style="color: #666; font-size: 2.5rem;">Apakah Kamu Menemukan Barang - Barang ini?</h2>
-      <p class="lead mb-0" style="color: #999; font-size: 1rem; max-width: 800px; margin: 0 auto;">Jika kamu menemukan barang-barang berikut bisa banget untuk melaporkan dengan klik Lapor Barang Ditemukan, suatu kejujuran dari kamu sebagai penemu barang tersebut sangat berharga bagi sang pemiliknya..</p>
+      <h2 class="display-5 fw-bold mb-3" style="color: #666;">
+        Apakah Kamu Menemukan Barang-Barang Ini?
+      </h2>
+      <p class="lead text-muted">
+        Jika kamu menemukan barang berikut, silakan laporkan demi membantu pemiliknya.
+      </p>
     </div>
-    
-    <!-- Item Cards Carousel -->
-    <div class="container">
-        <div class="row justify-content-center gap-5">
-            <div class="col-lg-5 col-md-10">
-                <div class="card-wrapper">
-                    <div class="card-image-box">
-                        <img src="/assets/images/ktm-dummy.jpg" alt="Foto Mahasiswa">
-                    </div>
 
-                    <div class="card-info-box">
-                        <h4 class="fw-bold text-dark mb-1">KTM Nafi Azzahra</h4>
-                        
+    <div class="position-relative">
+      <div id="foundItemCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+        @if(isset($pemilik) && $pemilik->count())
+          @foreach ($barang->chunk(2) as $index => $chunk)
+            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+              <div class="row justify-content-center gap-5">
+
+                @foreach ($chunk as $item)
+                  <div class="col-lg-5 col-md-10">
+                    <div class="card-wrapper">
+
+                      <div class="card-image-box">
+                        <img 
+                          src="{{ $item->foto_barang 
+                              ? asset('storage/'.$item->foto_barang) 
+                              : asset('assets/images/Missing.jpg') }}"
+                          alt="{{ $item->nama_barang }}">
+                      </div>
+
+                      <div class="card-info-box">
+                        <h4 class="fw-bold mb-1">{{ $item->nama_barang }}</h4>
+
                         <div class="mb-3">
-                            <span class="fw-bold text-red fs-5">FEB</span> 
-                            <span class="text-secondary">/lantai 3</span>
-                        </div>
-                        
-                        <div class="text-secondary mb-3">
-                            <i class="bi bi-people me-2"></i> 234 Laporan
+                          <span class="fw-bold text-danger">{{ $item->kategori->nama_kategori }}</span>
+                          <span class="text-secondary"> / {{ $item->lokasi }}</span>
                         </div>
 
                         <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
 
                         <div class="list-item-custom">
-                            <i class="bi bi-arrow-left-right"></i>
-                            <span>Lantai 3 Gedung FEB</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-layers"></i>
-                            <span>31 Desember 2026</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Status: Belum Ditemukan</span>
+                          <i class="bi bi-geo-alt"></i>
+                          <span>{{ $item->lokasi }}</span>
                         </div>
 
-                        <button class="btn btn-red mt-2">Lihat Detail</button>
+                        <div class="list-item-custom">
+                          <i class="bi bi-calendar"></i>
+                          <span>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</span>
+                        </div>
+
+                        <div class="list-item-custom">
+                          <i class="bi bi-info-circle"></i>
+                          <span>Status: {{ $item->status_barang }}</span>
+                        </div>
+
+                        <a href="{{ route('items.show', $item->id) }}" class="btn btn-red mt-3">
+                          Lihat Detail
+                        </a>
+                      </div>
+
                     </div>
-                </div>
+                  </div>
+                @endforeach
+
+              </div>
             </div>
-
-            <div class="col-lg-5 col-md-10">
-                <div class="card-wrapper">
-                    <div class="card-image-box">
-                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop" alt="Foto Buku">
-                    </div>
-
-                    <div class="card-info-box">
-                        <h4 class="fw-bold text-dark mb-1">Dompet Hilang</h4>
-                        
-                        <div class="mb-3">
-                            <span class="fw-bold text-red fs-5">FTE</span> 
-                            <span class="text-secondary">/Gedung A</span>
-                        </div>
-                        
-                        <div class="text-secondary mb-3">
-                            <i class="bi bi-people me-2"></i> 12 Laporan
-                        </div>
-
-                        <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
-
-                        <div class="list-item-custom">
-                            <i class="bi bi-arrow-left-right"></i>
-                            <span>Kantin Pusat</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-layers"></i>
-                            <span>12 Januari 2024</span>
-                        </div>
-                        <div class="list-item-custom">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Status: Ditemukan</span>
-                        </div>
-
-                        <button class="btn btn-red mt-2">Lihat Detail</button>
-                    </div>
-                </div>
-            </div>
+          @endforeach
+        @endif
         </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="prev" style="left:-50px">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="next" style="right:-90px">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+      </div>
     </div>
-    
-    <div class="text-center">
-      <a href="#" class="btn btn-danger btn-lg px-5">Lapor Barang Ditemukan →</a>
+
+    <div class="text-center mt-5">
+      <a href="{{ route('home') }}" class="btn btn-danger btn-lg px-5">
+        Lapor Barang Ditemukan →
+      </a>
     </div>
+
   </div>
 </section>
+
 
 <!-- Testimonials Section -->
 <section id="testimonial" class="py-5 position-relative" style="min-height: 500px; background-image: url('/assets/images/Testimony.png'); background-size: 100% 643px; background-position: center; background-attachment: scroll;">
@@ -501,5 +623,6 @@
         }
     </script>
 @endpush
+
 
 @endsection

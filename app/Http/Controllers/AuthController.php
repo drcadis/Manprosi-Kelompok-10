@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Items;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -12,16 +13,9 @@ use Symfony\Component\Mime\Message;
 
 class AuthController extends Controller
 {
-    public function showRegistration()
+    public function showDashboard()
     {
-        return view('auth.register');
-    }
-    public function showLogin()
-    {
-        if (Auth::check()) {
-            return redirect()->route('dashboard');
-        }
-        return view('auth.login');
+        return view('welcome');
     }
 
     public function register(Request $request)
@@ -29,7 +23,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:6|confirmed'
         ]);
 
         if ($validator->fails()) {
@@ -50,19 +44,17 @@ class AuthController extends Controller
             'email' => $validator->validated()['email'],
             'password' => Hash::make($validator->validated()['password']),
             'role' => 'user',
+            
         ]);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
 
         if (request()->expectsJson()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'User registered successfully',
-                'token' => $token,
                 'user' => $user,
             ], 201);
         }
-        return redirect()->route('login')->with('success', 'Email telah terdaftar');
+        return redirect()->route('home')->with('register_success', 'Akun Berhasil Dibuat, Silahkan Login');
     }
 
     public function login(Request $request)
@@ -76,19 +68,19 @@ class AuthController extends Controller
 
         if (Auth::attempt($validator->validated(), $remember)) {
             $user = User::where('email', $validator->validated()['email'])->first();
-            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return redirect('/')->with('login_success', 'Berhasil login');
 
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 'success',
                     'message' => 'User logged in successfully',
-                    'token' => $token,
                     'user' => $user,
                 ], 200);
             }
 
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->intended('home');
         }
 
         if ($request->expectsJson()) {
@@ -119,5 +111,15 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login')->with('success', 'Anda Berhasil logout');
+    }
+
+    public function carousel()
+    {
+        $items = Items::where('status_barang', 'Belum Ditemukan' && 'tipe_laporan', 'Kehilangan Pemilik')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('home', compact('items'));
     }
 }

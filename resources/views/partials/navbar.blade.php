@@ -21,10 +21,59 @@
         <li class="nav-item"><a class="nav-link text-dark" href="#testimonial">Testimonial</a></li>
         <li class="nav-item"><a class="nav-link text-dark" href="#faq">FAQ</a></li>
       </ul>
-      <div class="d-flex gap-2">
-        <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#authModal" onclick="switchForm('login')">Login</button>
-        <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#authModal" onclick="switchForm('register')">Sign up</button>
-      </div>
+      <div class="d-flex align-items-center gap-2">
+
+          {{-- JIKA BELUM LOGIN --}}
+          @guest
+            <button type="button"
+                    class="btn btn-danger text-white"
+                    data-bs-toggle="modal"
+                    data-bs-target="#authModal"
+                    onclick="switchForm('login')">
+                Sign In
+            </button>
+
+            <button type="button"
+                    class="btn btn-danger text-white"
+                    data-bs-toggle="modal"
+                    data-bs-target="#authModal"
+                    onclick="switchForm('register')">
+                Sign up
+            </button>
+          @endguest
+
+
+          {{-- JIKA SUDAH LOGIN --}}
+          @auth
+            <div class="dropdown">
+              <button class="btn btn-outline-danger dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                Settings
+              </button>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <span class="dropdown-item-text text-muted">
+                    {{ auth()->user()->email }}
+                  </span>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item text-danger">
+                      Logout
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          @endauth
+
+        </div>
+
     </div>
   </div>
 </nav>
