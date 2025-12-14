@@ -88,13 +88,24 @@ class ItemController extends Controller
         return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
 
+    public function getAll()
+    {
+        $getAll = Items::latest()->paginate(12);
+
+        return view('semuaBarang', compact('getAll'));
+    }
+    
     public function show($id)
     {
         // Ambil data item berdasarkan ID
         $item = Items::findOrFail($id);
+        $relatedItems = Items::where('id', '!=', $item->id)
+            ->where('id_kategori', $item->id_kategori) // atau id_kategori
+            ->latest()
+            ->take(4)
+            ->get();
 
         // Kirim ke view
-        return view('items.show', compact('item'));
+        return view('detailBarang', compact('item', 'relatedItems'));
     }
-
 }

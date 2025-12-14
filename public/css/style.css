@@ -281,6 +281,58 @@ body {
   color: white;
 }
 
+<<<<<<< Updated upstream
+=======
+/* ============================================
+   Horizontal Scroll Container untuk Cards
+   ============================================ */
+.cards-horizontal-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 20px 0;
+  margin-bottom: 30px;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  /* Hide scrollbar untuk Chrome, Safari, Opera */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-red) #f1f1f1;
+}
+
+.cards-horizontal-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.cards-horizontal-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.cards-horizontal-scroll::-webkit-scrollbar-thumb {
+  background: var(--primary-red);
+  border-radius: 10px;
+}
+
+.cards-horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #c82333;
+}
+
+.cards-scroll-container {
+  display: flex;
+  gap: 30px;
+  padding: 10px 20px;
+  /* Pastikan container tidak shrink */
+  min-width: max-content;
+}
+
+.card-scroll-item {
+  flex: 0 0 auto;
+  /* Lebar card tetap, tidak shrink atau grow */
+  width: 500px;
+  min-width: 500px;
+}
+
+>>>>>>> Stashed changes
 /* card barang hilang */
 .card-wrapper {
   position: relative;
@@ -398,6 +450,14 @@ svg:hover {
   border-radius: 15px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
   transition: all 0.3s ease;
+<<<<<<< Updated upstream
+=======
+  height: 90%; 
+  min-height: 250px; 
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+>>>>>>> Stashed changes
 }
 
 .testimonial-card:hover {
@@ -408,6 +468,13 @@ svg:hover {
 
 .testimonial-card-body {
   padding: 1.5rem;
+<<<<<<< Updated upstream
+=======
+  flex: 1; /* Mengambil sisa ruang yang ada */
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+>>>>>>> Stashed changes
 }
 
 .testimonial-card-body h5 {
@@ -427,6 +494,71 @@ svg:hover {
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
+<<<<<<< Updated upstream
+=======
+/* Testimonial Carousel - Horizontal Scroll */
+.testimonial-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.testimonial-carousel-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 20px 0;
+  scroll-behavior: smooth;
+  /* Hide scrollbar completely */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  /* Hide scrollbar untuk Chrome, Safari, Opera */
+  user-select: none; /* Prevent text selection during drag */
+  -webkit-user-select: none;
+}
+
+.testimonial-carousel-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #dc3545 !important; 
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: #666; 
+    opacity: 0.5;
+  }
+
+.testimonial-card-item {
+  flex: 0 0 calc(33.333% - 14px); /* 3 cards visible, dengan gap */
+  min-width: 300px;
+  max-width: 400px;
+}
+
+/* Responsive: 2 cards on tablet */
+@media (max-width: 992px) {
+  .testimonial-card-item {
+    flex: 0 0 calc(50% - 10px); /* 2 cards visible */
+    min-width: 280px;
+  }
+}
+
+/* Responsive: 1 card on mobile */
+@media (max-width: 768px) {
+  .testimonial-card-item {
+    flex: 0 0 calc(100% - 10px); /* 1 card visible */
+    min-width: 250px;
+  }
+}
+
+
+>>>>>>> Stashed changes
 /* Item Cards with Overlay */
 .card[style*="overflow: hidden"] {
   border-radius: 0.5rem;
@@ -513,6 +645,34 @@ footer a:hover {
   text-decoration: underline !important;
 }
 
+<<<<<<< Updated upstream
+=======
+/* Responsive Adjustments untuk Horizontal Scroll */
+@media (max-width: 768px) {
+  .card-scroll-item {
+    width: 400px;
+    min-width: 400px;
+  }
+
+  .cards-scroll-container {
+    gap: 20px;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-scroll-item {
+    width: 350px;
+    min-width: 350px;
+  }
+
+  .cards-scroll-container {
+    gap: 15px;
+    padding: 10px 10px;
+  }
+}
+
+>>>>>>> Stashed changes
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .hero-content {

@@ -258,11 +258,13 @@
     }
 
     function validateStep2() {
-        const requiredFields = ['nama', 'no_telp'];
+        const step = document.getElementById('step-2');
+        const requiredFields = step.querySelectorAll(
+            'input[required]');
+
         let isValid = true;
 
-        requiredFields.forEach(fieldName => {
-            const field = document.querySelector(`[name="${fieldName}"]`);
+        requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 field.style.borderColor = '#DC3545';
                 isValid = false;
@@ -277,14 +279,17 @@
 
         return isValid;
     }
+
 
     function validateStep3() {
-        const requiredFields = ['nama_barang', 'id_kategori', 'tanggal', 'lokasi', 'deskripsi'];
+        const step = document.getElementById('step-3');
+        const requiredFields = step.querySelectorAll(
+            'input[required], select[required], textarea[required]');
+
         let isValid = true;
 
-        requiredFields.forEach(fieldName => {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            if (!field.value.trim()) {
+        requiredFields.forEach(field => {
+            if (!field.value || !field.value.trim()) {
                 field.style.borderColor = '#DC3545';
                 isValid = false;
             } else {
@@ -298,6 +303,7 @@
 
         return isValid;
     }
+
 
     function handleFileSelect(input) {
         const fileName = input.files[0]?.name;

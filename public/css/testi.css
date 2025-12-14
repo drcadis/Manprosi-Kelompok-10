@@ -1,0 +1,177 @@
+/* ============================================
+   CSS untuk Form Testimonial Modal
+   File: public/css/testi.css
+   Style glass effect sama seperti form login
+   ============================================ */
+
+/* Modal Glass Effect - Sama seperti login */
+.modal-glass-testi {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  color: white;
+}
+
+/* Judul Form */
+.glass-header {
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Custom Input Fields */
+.form-control-glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #333;
+  margin-bottom: 15px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.form-control-glass:focus {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  outline: none;
+  border: none;
+}
+
+.form-control-glass::placeholder {
+  color: #999;
+}
+
+/* Textarea khusus */
+.form-control-glass[rows] {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Form Label */
+.form-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Warna Merah sesuai Request */
+.btn-custom-red {
+  background-color: #DC3545;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+.btn-custom-red:hover {
+  background-color: #c82333;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+}
+
+.btn-custom-red:disabled {
+  background-color: rgba(220, 53, 69, 0.5);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Checkbox Custom */
+.form-check-input {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  margin-top: 0.3rem;
+}
+
+.form-check-input:checked {
+  background-color: #DC3545;
+  border-color: #DC3545;
+}
+
+.form-check-input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.form-check-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Character Counter */
+#charCount {
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+/* Close button modal (X) custom warna putih */
+.btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Alert untuk user yang belum login */
+.alert {
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+}
+
+.alert-warning {
+  background-color: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.5);
+  color: #fff;
+}
+
+.alert-warning a {
+  color: #ffc107;
+  text-decoration: underline;
+}
+
+.alert-warning a:hover {
+  color: #ffca2c;
+}
+
+/* Text colors */
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.text-danger {
+  color: #ff6b6b !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .modal-glass-testi {
+    padding: 20px !important;
+  }
+
+  .glass-header {
+    font-size: 1.5rem;
+  }
+
+  .form-control-glass {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .btn-custom-red {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+

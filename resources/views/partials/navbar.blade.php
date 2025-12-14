@@ -1,11 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-1 sticky-top">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
-        <circle cx="20" cy="20" r="18" fill="#DC3545" stroke="white" stroke-width="2"/>
-        <path d="M20 10L20 30M10 20L30 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <strong class="text-dark">LOST AND FOUND</strong>
+    <a class="navbar-brand d-flex align-items-center p-0" href="{{ url('/') }}">
+      <img src="/assets/images/Logo.png" alt="Lost and Found Logo" height="80" style="width: auto; object-fit: contain;">
+
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
@@ -15,11 +13,11 @@
     <div class="collapse navbar-collapse" id="navmenu">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link text-dark" href="{{ url('/') }}">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#service">Service</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#feature">Feature</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#product">Product</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#testimonial">Testimonial</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="{{ route('semua.barang') }}">Barang Hilang</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="{{ route('cari') }}">Lapor Barang</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="{{ route('admin.index') }}">Admin</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#" onclick="event.preventDefault(); openTestimonialModal();">Testimonial</a></li>
+
       </ul>
       <div class="d-flex align-items-center gap-2">
 
@@ -77,3 +75,64 @@
     </div>
   </div>
 </nav>
+
+
+
+
+
+<script>
+
+    // Fungsi untuk membuka modal testimonial
+    function openTestimonialModal() {
+        // Jika di halaman welcome, scroll ke section testimonial dulu
+        if (window.location.pathname === '/' || window.location.pathname === '/home') {
+            const testimonialSection = document.getElementById('testimonial');
+            if (testimonialSection) {
+                testimonialSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(function() {
+                    const modalElement = document.getElementById('testimonialModal');
+                    if (modalElement) {
+                        const modal = new bootstrap.Modal(modalElement);
+                        modal.show();
+                    }
+                }, 500);
+            } else {
+                const modalElement = document.getElementById('testimonialModal');
+                if (modalElement) {
+                    const modal = new bootstrap.Modal(modalElement);
+                    modal.show();
+                }
+            }
+        } else {
+            // Jika di halaman lain, langsung buka modal
+            const modalElement = document.getElementById('testimonialModal');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+        }
+    }
+
+    // Pastikan fungsi tersedia setelah DOM loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fungsi sudah didefinisikan di atas sebagai global, jadi tidak perlu dilakukan apa-apa
+        // Ini hanya untuk memastikan script sudah dimuat
+        
+        // Handle smooth scroll untuk testimonial dari halaman lain
+        if (window.location.hash === '#testimonial') {
+            setTimeout(function() {
+                const testimonialSection = document.getElementById('testimonial');
+                if (testimonialSection) {
+                    testimonialSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+    });
+
+    // Make function globally accessible
+    window.openTestimonialModal = openTestimonialModal;
+    </script>
+
+{{-- Include Form Testimonial Modal untuk semua halaman yang menggunakan navbar --}}
+@include('partials.form-testi')
+

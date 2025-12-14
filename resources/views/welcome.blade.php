@@ -46,6 +46,14 @@
   will-change: transform;
 }
 
+.card-image-box {
+    width: 350px;
+    height: 300px;          /* batas tinggi gambar */
+    overflow: hidden;       /* potong gambar berlebih */
+    border-radius: 12px;    /* opsional */
+}
+
+
 
 </style>
 
@@ -62,6 +70,7 @@
             Platform terpercaya untuk melaporkan barang hilang atau ditemukan. Dari dokumen penting hingga barang pribadi, kami membantu mempertemukan pemilik dengan barangnya secara cepat dan aman.
           </p>
           <a href="{{ route('cari') }}" class="btn btn-danger px-4 py-2">Lapor Kehilangan Barang</a>
+
           @endauth
           @guest
             <h1 class="display-4 fw-bold mb-4" style="color: #1a1a1a; line-height: 1.2;">Temukan & Kembalikan Barang!</h1>
@@ -69,170 +78,17 @@
             Platform terpercaya untuk melaporkan barang hilang atau ditemukan. Dari dokumen penting hingga barang pribadi, kami membantu mempertemukan pemilik dengan barangnya secara cepat dan aman.
           </p>
           @endguest
-          
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Login -->
-  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md"> <div class="modal-content modal-glass p-4">
-                
-                <div class="position-absolute top-0 end-0 p-3">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div id="loginSection">
-                    <h2 class="glass-header">Login</h2>
-                    <p class="text-center text-white-50 mb-4">Temukan & Kembalikan Barang</p>
-                    
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="mb-3">
-                            <input type="email"
-                                  name="email"
-                                  class="form-control form-control-glass"
-                                  placeholder="Email"
-                                  required>
-                        </div>
-                        
-                        <div class="mb-3 position-relative">
-                            <input type="password"
-                                  name="password"
-                                  class="form-control form-control-glass"
-                                  placeholder="Password"
-                                  id="loginPass"
-                                  required>
-
-                            <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
-                              style="cursor: pointer;"
-                              onclick="togglePass('loginPass')"></i>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                      type="checkbox"
-                                      name="remember"
-                                      id="rememberMe">
-                                <label class="form-check-label text-white" style="font-size: 0.9rem;" for="rememberMe">
-                                    Remember me
-                                </label>
-                            </div>
-                            <a href="#" class="helper-text">Forgot Password?</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-custom-red mb-3">Login</button>
-                        
-                        <div class="text-center">
-                            <span class="text-white-50" style="font-size: 0.9rem;">Don't have account? </span>
-                            <a onclick="switchForm('register')" class="auth-toggle-link fw-bold">Register</a>
-                        </div>
-                    </form>
-                </div>
-
-
-                <div id="registerSection" class="d-none">
-                    <h2 class="glass-header">Create Account</h2>
-                    
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="mb-3">
-                            <input type="text"
-                                  name="name"
-                                  class="form-control form-control-glass"
-                                  placeholder="Name"
-                                  required>
-                        </div>
-
-                        <div class="mb-3">
-                            <input type="email"
-                                  name="email"
-                                  class="form-control form-control-glass"
-                                  placeholder="Email"
-                                  required>
-                        </div>
-                        
-                        <div class="position-relative mb-3">
-                            <input type="password"
-                                  name="password"
-                                  class="form-control form-control-glass"
-                                  placeholder="Password"
-                                  id="regPass"
-                                  required>
-                        </div>
-
-                        {{-- Confirm password hanya UI --}}
-                        <div class="position-relative mb-3">
-                            <input type="password"
-                                  name="password_confirmation"
-                                  class="form-control form-control-glass"
-                                  placeholder="Confirm Password"
-                                  id="regConfirmPass">
-                        </div>
-
-                        <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
-                            <label class="form-check-label text-white" style="font-size: 0.85rem;" for="agreeTerms">
-                                Accept all terms & Conditions
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-custom-red mb-3">
-                            Create Account
-                        </button>
-                        
-                        <div class="text-center">
-                            <span class="text-white-50" style="font-size: 0.9rem;">Already have account? </span>
-                            <a onclick="switchForm('login')" class="auth-toggle-link fw-bold">Login</a>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Register Success Modal -->
-                <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content text-center p-4">
-
-                            <div class="modal-body">
-                                <h4 class="text-success mb-3">🎉 Registrasi Berhasil!</h4>
-                                <p class="text-muted mb-4">
-                                    Akun kamu berhasil dibuat. Silakan login untuk melanjutkan.
-                                </p>
-
-                                <button class="btn btn-danger w-100"
-                                        data-bs-dismiss="modal"
-                                        onclick="openLoginModal()">
-                                    Login Sekarang
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-  <!-- Carousel Dots -->
-  <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4" style="z-index: 3;">
-    <div class="d-flex gap-2 align-items-center">
-      <span class="rounded-circle bg-danger" style="width: 14px; height: 14px;"></span>
-      <span class="rounded-circle border border-2 border-danger bg-transparent" style="width: 10px; height: 10px;"></span>
-      <span class="rounded-circle border border-2 border-danger bg-transparent" style="width: 10px; height: 10px;"></span>
-    </div>
-  </div>
+  
 </section>
 
 <!-- Welcome Section -->
 <section class="py-5 bg-white">
   <div class="container text-center">
-    <h2 class="display-5 fw-bold mb-2" style="color: #666; font-size: 2.5rem;">Welcome to TelU Lost & Found</h2>  
+    <h2 class="display-5 fw-bold mb-2" style="color: #666; font-size: 2.5rem;">Wellcome to TelU Lost & Found</h2>
     <p class="lead" style="color: #999; font-size: 1.1rem;">Layanan Pengaduan Kehilangan dan Penemuan Barang</p>
   </div>
 </section>
@@ -330,268 +186,543 @@
 </section>
 
 <!-- Search Items Section -->
-<section id="product" class="py-5 bg-white" style="border-top: 1px solid #959597;">
-  <div class="container">
+<section
+    id="product"
+    class="py-5 bg-white"
+    style="border-top: 1px solid #959597;"
+>
+    <div class="container">
 
-    <!-- Heading -->
-    <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold mb-3" style="color: #666; font-size: 2.5rem;">
-        Cari Barangmu Disini
-      </h2>
-      <p class="lead mb-0" style="color: #999; font-size: 1rem; max-width: 800px; margin: 0 auto;">
-        Kamu bisa mencari barang kamu yang hilang di sini.
-      </p>
-    </div>
+        {{-- ================= HEADER ================= --}}
+        <div class="text-center mb-5">
+            <h2
+                class="display-5 fw-bold mb-3"
+                style="color:#666; font-size:2.5rem;"
+            >
+                Cari Barangmu Disini
+            </h2>
 
-    <!-- Carousel -->
-    <div class="position-relative">
-    <div id="searchItemCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-      @if(isset($pemilik) && $pemilik->count())
-        @foreach ($pemilik->chunk(2) as $index => $chunk)
-          <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-            <div class="row justify-content-center gap-5">
+            <p
+                class="lead mb-0"
+                style="color:#999; font-size:1rem; max-width:800px; margin:0 auto;"
+            >
+                Kamu bisa mencari barang kamu yang hilang di sini.
+                Jika tidak ada, kamu bisa memilih “Lihat Lebih Banyak”.
+                Semoga barang kamu segera ditemukan.
+            </p>
+        </div>
 
-              @foreach ($chunk as $item)
-                <div class="col-lg-5 col-md-10">
-                  <div class="card-wrapper">
+        {{-- ================= ITEM CARDS ================= --}}
+        <div class="swiper testimonialSwiper cards-horizontal-scroll">
+            <div class="swiper-wrapper cards-scroll-container">
 
-                    <!-- Image -->
-                    <div class="card-image-box">
-                      <img 
-                        src="{{ $item->foto_barang 
-                            ? asset('storage/'.$item->foto_barang) 
-                            : asset('assets/images/Missing.jpg') }}"
-                        alt="{{ $item->nama_barang }}">
-                    </div>
+                @if(isset($pemilik) && $pemilik->count())
+                    @foreach ($pemilik as $item)
+                        <div class="swiper-slide">
+                            <div class="card-wrapper">
 
-                    <!-- Info -->
-                    <div class="card-info-box">
-                      <h4 class="fw-bold text-dark mb-1">
-                        {{ $item->nama_barang }}
-                      </h4>
+                                {{-- Image --}}
+                                <div class="card-image-box">
+                                    <img
+                                        src="{{ $item->foto_barang
+                                            ? asset('storage/'.$item->foto_barang)
+                                            : asset('assets/images/Missing.jpg') }}"
+                                        alt="{{ $item->nama_barang }}"
+                                    >
+                                </div>
 
-                      <div class="mb-3">
-                        <span class="fw-bold text-danger fs-5">
-                          {{ $item->kategori->nama_kategori }}
-                        </span>
-                        <span class="text-secondary">
-                          / {{ $item->lokasi }}
-                        </span>
-                      </div>
+                                {{-- Info --}}
+                                <div class="card-info-box">
+                                    <h4 class="fw-bold text-dark mb-1">
+                                        {{ $item->nama_barang }}
+                                    </h4>
 
-                      <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
+                                    <div class="mb-3">
+                                        <span class="fw-bold text-danger fs-5">
+                                            {{ $item->kategori?->nama_kategori ?? '-' }}
+                                        </span>
+                                        <span class="text-secondary">
+                                            / {{ $item->lokasi }}
+                                        </span>
+                                    </div>
 
-                      <div class="list-item-custom">
-                        <i class="bi bi-geo-alt"></i>
-                        <span>{{ $item->lokasi }}</span>
-                      </div>
+                                    <h6 class="fw-bold text-secondary mb-3">
+                                        Detail Barang:
+                                    </h6>
 
-                      <div class="list-item-custom">
-                        <i class="bi bi-calendar"></i>
-                        <span>
-                          {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
-                        </span>
-                      </div>
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>{{ $item->lokasi }}</span>
+                                    </div>
 
-                      <div class="list-item-custom">
-                        <i class="bi bi-info-circle"></i>
-                        <span>Status: {{ ucfirst($item->status_barang) }}</span>
-                      </div>
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-calendar"></i>
+                                        <span>
+                                            {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
+                                        </span>
+                                    </div>
 
-                      <a href="{{ route('items.show', $item->id) }}" class="btn btn-red mt-3">
-                        Lihat Detail
-                      </a>
-                    </div>
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-info-circle"></i>
+                                        <span>
+                                            Status: {{ ucfirst($item->status_barang) }}
+                                        </span>
+                                    </div>
 
-                  </div>
-                </div>
-              @endforeach
-              
+                                    <a
+                                        href="{{ route('detail', $item->id) }}"
+                                        class="btn btn-red mt-3"
+                                    >
+                                        Lihat Detail
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
             </div>
-          </div>
-        @endforeach
-      @endif
-      </div>
+        </div>
 
-      <!-- Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="prev" style="left:-50px">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
+        {{-- ================= BUTTON ================= --}}
+        <div class="text-center mt-5">
+            <a
+                href="{{ route('semua.barang') }}"
+                class="btn btn-danger btn-lg px-5"
+            >
+                Lihat Lebih Banyak →
+            </a>
+        </div>
 
-      <button class="carousel-control-next" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="next" style="right:-90px">
-        <span class="carousel-control-next-icon"></span>
-      </button>
-    </div>
     </div>
 
-    <!-- CTA -->
-    <div class="text-center mt-5">
-      <a href="{{ route('home') }}" class="btn btn-danger btn-lg px-5">
-        Lihat Lebih Banyak →
-      </a>
-    </div>
+    {{-- ================= MODAL LOGIN & REGISTER ================= --}}
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content modal-glass p-4">
 
-  </div>
+                {{-- Close Button --}}
+                <div class="position-absolute top-0 end-0 p-3">
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+
+                {{-- ================= LOGIN ================= --}}
+                <div id="loginSection">
+                    <h2 class="glass-header">Login</h2>
+                    <p class="text-center text-white-50 mb-4">
+                        Temukan & Kembalikan Barang
+                    </p>
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <div class="mb-3">
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control form-control-glass"
+                                placeholder="Email"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <input
+                                type="password"
+                                name="password"
+                                id="loginPass"
+                                class="form-control form-control-glass"
+                                placeholder="Password"
+                                required
+                            >
+                            <i
+                                class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
+                                style="cursor:pointer;"
+                                onclick="togglePass('loginPass')"
+                            ></i>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="remember"
+                                    id="rememberMe"
+                                >
+                                <label
+                                    class="form-check-label text-white"
+                                    for="rememberMe"
+                                    style="font-size:0.9rem;"
+                                >
+                                    Remember me
+                                </label>
+                            </div>
+                            <a href="#" class="helper-text">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom-red mb-3">
+                            Login
+                        </button>
+
+                        <div class="text-center">
+                            <span class="text-white-50" style="font-size:0.9rem;">
+                                Don't have account?
+                            </span>
+                            <a
+                                onclick="switchForm('register')"
+                                class="auth-toggle-link fw-bold"
+                            >
+                                Register
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- ================= REGISTER ================= --}}
+                <div id="registerSection" class="d-none">
+                    <h2 class="glass-header">Create Account</h2>
+
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="mb-3">
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control form-control-glass"
+                                placeholder="Name"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control form-control-glass"
+                                placeholder="Email"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <input
+                                type="password"
+                                name="password"
+                                id="regPass"
+                                class="form-control form-control-glass"
+                                placeholder="Password"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <input
+                                type="password"
+                                name="password_confirmation"
+                                class="form-control form-control-glass"
+                                placeholder="Confirm Password"
+                            >
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="agreeTerms"
+                                required
+                            >
+                            <label
+                                class="form-check-label text-white"
+                                for="agreeTerms"
+                                style="font-size:0.85rem;"
+                            >
+                                Accept all terms & conditions
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom-red mb-3">
+                            Create Account
+                        </button>
+
+                        <div class="text-center">
+                            <span class="text-white-50" style="font-size:0.9rem;">
+                                Already have account?
+                            </span>
+                            <a
+                                onclick="switchForm('login')"
+                                class="auth-toggle-link fw-bold"
+                            >
+                                Login
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </section>
 
 
 
 <!-- Found Items Section -->
-<section class="py-5 bg-white" style="border-top: 2px solid #959597;">
-  <div class="container">
+<section
+    class="py-5 bg-white"
+    style="border-top: 1px solid #959597;"
+>
+    <div class="container">
 
-    <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold mb-3" style="color: #666;">
-        Apakah Kamu Menemukan Barang-Barang Ini?
-      </h2>
-      <p class="lead text-muted">
-        Jika kamu menemukan barang berikut, silakan laporkan demi membantu pemiliknya.
-      </p>
-    </div>
-
-    <div class="position-relative">
-      <div id="foundItemCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-        @if(isset($pemilik) && $pemilik->count())
-          @foreach ($barang->chunk(2) as $index => $chunk)
-            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-              <div class="row justify-content-center gap-5">
-
-                @foreach ($chunk as $item)
-                  <div class="col-lg-5 col-md-10">
-                    <div class="card-wrapper">
-
-                      <div class="card-image-box">
-                        <img 
-                          src="{{ $item->foto_barang 
-                              ? asset('storage/'.$item->foto_barang) 
-                              : asset('assets/images/Missing.jpg') }}"
-                          alt="{{ $item->nama_barang }}">
-                      </div>
-
-                      <div class="card-info-box">
-                        <h4 class="fw-bold mb-1">{{ $item->nama_barang }}</h4>
-
-                        <div class="mb-3">
-                          <span class="fw-bold text-danger">{{ $item->kategori->nama_kategori }}</span>
-                          <span class="text-secondary"> / {{ $item->lokasi }}</span>
-                        </div>
-
-                        <h6 class="fw-bold text-secondary mb-3">Detail Barang:</h6>
-
-                        <div class="list-item-custom">
-                          <i class="bi bi-geo-alt"></i>
-                          <span>{{ $item->lokasi }}</span>
-                        </div>
-
-                        <div class="list-item-custom">
-                          <i class="bi bi-calendar"></i>
-                          <span>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</span>
-                        </div>
-
-                        <div class="list-item-custom">
-                          <i class="bi bi-info-circle"></i>
-                          <span>Status: {{ $item->status_barang }}</span>
-                        </div>
-
-                        <a href="{{ route('items.show', $item->id) }}" class="btn btn-red mt-3">
-                          Lihat Detail
-                        </a>
-                      </div>
-
-                    </div>
-                  </div>
-                @endforeach
-
-              </div>
-            </div>
-          @endforeach
-        @endif
+        {{-- Header --}}
+        <div class="text-center mb-5">
+            <h2
+                class="display-5 fw-bold mb-3"
+                style="color:#666; font-size:2.5rem;"
+            >
+                Apakah Kamu Menemukan Barang-Barang Ini?
+            </h2>
+            <p
+                class="lead mb-0"
+                style="color:#999; font-size:1rem; max-width:800px; margin:0 auto;"
+            >
+                Jika kamu menemukan barang berikut, silakan laporkan demi membantu pemiliknya.
+            </p>
         </div>
 
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="prev" style="left:-50px">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
+        {{-- Item Cards (Horizontal Scroll – sama seperti search section) --}}
+        <div class="swiper testimonialSwiper cards-horizontal-scroll">
+            <div class="swiper-wrapper cards-scroll-container">
 
-      <button class="carousel-control-next" type="button" data-bs-target="#searchItemCarousel" data-bs-slide="next" style="right:-90px">
-        <span class="carousel-control-next-icon"></span>
-      </button>
-      </div>
+                @if(isset($barang) && $barang->count())
+                    @foreach ($barang as $item)
+                        <div class="swiper-slide">
+                            <div class="card-wrapper">
+
+                                {{-- Image --}}
+                                <div class="card-image-box">
+                                    <img
+                                        src="{{ $item->foto_barang
+                                            ? asset('storage/'.$item->foto_barang)
+                                            : asset('assets/images/Missing.jpg') }}"
+                                        alt="{{ $item->nama_barang }}"
+                                    >
+                                </div>
+
+                                {{-- Info --}}
+                                <div class="card-info-box">
+                                    <h4 class="fw-bold text-dark mb-1">
+                                        {{ $item->nama_barang }}
+                                    </h4>
+
+                                    <div class="mb-3">
+                                        <span class="fw-bold text-danger fs-5">
+                                            {{ $item->kategori?->nama_kategori ?? '-' }}
+                                        </span>
+                                        <span class="text-secondary">
+                                            / {{ $item->lokasi }}
+                                        </span>
+                                    </div>
+
+                                    <h6 class="fw-bold text-secondary mb-3">
+                                        Detail Barang:
+                                    </h6>
+
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>{{ $item->lokasi }}</span>
+                                    </div>
+
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-calendar"></i>
+                                        <span>
+                                            {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="list-item-custom">
+                                        <i class="bi bi-info-circle"></i>
+                                        <span>
+                                            Status: {{ ucfirst($item->status_barang) }}
+                                        </span>
+                                    </div>
+
+                                    <a
+                                        href="{{ route('detail', $item->id) }}"
+                                        class="btn btn-red mt-3"
+                                    >
+                                        Lihat Detail
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="text-center text-muted">
+                        Tidak ada barang ditemukan saat ini.
+                    </div>
+                @endif
+
+            </div>
+        </div>
+
+        {{-- Action Button --}}
+        <div class="text-center mt-5">
+            <a
+                href="{{ route('cari') }}"
+                class="btn btn-danger btn-lg px-5"
+            >
+                Lapor Barang Ditemukan →
+            </a>
+        </div>
+
     </div>
-
-    <div class="text-center mt-5">
-      <a href="{{ route('home') }}" class="btn btn-danger btn-lg px-5">
-        Lapor Barang Ditemukan →
-      </a>
-    </div>
-
-  </div>
 </section>
+
+
 
 
 <!-- Testimonials Section -->
-<section id="testimonial" class="py-5 position-relative" style="min-height: 500px; background-image: url('/assets/images/Testimony.png'); background-size: 100% 643px; background-position: center; background-attachment: scroll;">
-  <!-- <div class="overlay position-absolute w-100 h-100" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);"></div> -->
-  <div class="overlay position-absolute w-100 h-100"></div>
-  <div class="container position-relative" style="z-index: 2;">
-    <h2 class="display-5 fw-bold text-center mb-5" style="font-size: 2.5rem; color: #999;">Apa Kata Mereka?</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="testimonial-card h-100">
-          <div class="testimonial-card-body">
-            <h5 class="fw-bold mb-3">"The best Web Lost & Found"</h5>
-            <p class="text-light mb-4" style="line-height: 1.6;">Aku jadi bisa menemukan mantan aku yang hilang berkat website ini, terimakasih bah'il.</p>
-            <div class="d-flex align-items-center">
-              <div class="testimonial-avatar me-3">
-                <img src="https://ui-avatars.com/api/?name=Nouvail&background=DC3545&color=fff&size=128" alt="Nouvail" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-              </div>
-              <div>
-                <p class="mb-0 fw-bold">Nouvail suka jadi kaya</p>
-                <small class="text-light">Mahasiswa</small>
-              </div>
-            </div>
-          </div>
+<section
+    id="testimonial"
+    class="py-5 position-relative"
+    style="
+        min-height: 500px;
+        background-image: url('/assets/images/Testimony.png');
+        background-size: cover;
+        background-position: center;
+    "
+>
+    <!-- Overlay -->
+    <div class="overlay position-absolute w-100 h-100"></div>
+
+    <div class="container position-relative" style="z-index: 2;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3" style="font-size: 2.5rem; color: #000000ff;">
+                Apa Kata Mereka?
+            </h2>
+            <p
+                class="lead mb-0"
+                style="color: #000000ff; font-size: 1rem; max-width: 800px; margin: 0 auto;"
+            >
+                Testimoni pengguna website Lost & Found
+            </p>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="testimonial-card h-100">
-          <div class="testimonial-card-body">
-            <h5 class="fw-bold mb-3">"The best Web Lost & Found"</h5>
-            <p class="text-light mb-4" style="line-height: 1.6;">Aku jadi bisa menemukan mantan aku yang hilang berkat website ini, terimakasih bah'il.</p>
-            <div class="d-flex align-items-center">
-              <div class="testimonial-avatar me-3">
-                <img src="https://ui-avatars.com/api/?name=Nouvail&background=DC3545&color=fff&size=128" alt="Nouvail" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-              </div>
-              <div>
-                <p class="mb-0 fw-bold">Nouvail suka jadi kaya</p>
-                <small class="text-light">Mahasiswa</small>
-              </div>
+
+        <!-- ================= TESTIMONIAL SWIPER ================= -->
+        <div class="swiper testimonialSwiper">
+            <div class="swiper-wrapper">
+
+                <!-- Testimonial Item -->
+                <div class="swiper-slide">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-card-body">
+                            <h5 class="fw-bold mb-3">
+                                "The best Web Lost & Found"
+                            </h5>
+
+                            <p class="text-light mb-4" style="line-height: 1.6;">
+                                Aku jadi bisa menemukan barang yang hilang berkat
+                                website ini. Terima kasih!
+                            </p>
+
+                            <div class="d-flex align-items-center">
+                                <div class="testimonial-avatar me-3">
+                                    <img
+                                        src="https://ui-avatars.com/api/?name=Nouvail&background=DC3545&color=fff&size=128"
+                                        alt="Nouvail"
+                                        class="rounded-circle"
+                                        style="width:50px;height:50px;object-fit:cover;"
+                                    >
+                                </div>
+                                <div>
+                                    <p class="mb-0 fw-bold">Nouvail</p>
+                                    <small class="text-light">Mahasiswa</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial Item -->
+                <div class="swiper-slide">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-card-body">
+                            <h5 class="fw-bold mb-3">
+                                "Platform yang sangat membantu"
+                            </h5>
+
+                            <p class="text-light mb-4" style="line-height: 1.6;">
+                                Saya kehilangan KTM di kampus dan menemukannya
+                                hanya dalam 2 hari.
+                            </p>
+
+                            <div class="d-flex align-items-center">
+                                <div class="testimonial-avatar me-3">
+                                    <img
+                                        src="/assets/images/testi.jpg"
+                                        alt="Sarah"
+                                        class="rounded-circle"
+                                        style="width:50px;height:50px;object-fit:cover;"
+                                    >
+                                </div>
+                                <div>
+                                    <p class="mb-0 fw-bold">Sarah Putri</p>
+                                    <small class="text-light">Mahasiswa</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial Item -->
+                <div class="swiper-slide">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-card-body">
+                            <h5 class="fw-bold mb-3">
+                                "Sangat mudah digunakan"
+                            </h5>
+
+                            <p class="text-light mb-4" style="line-height: 1.6;">
+                                Interface sederhana dan proses pelaporan cepat.
+                                Sangat recommended!
+                            </p>
+
+                            <div class="d-flex align-items-center">
+                                <div class="testimonial-avatar me-3">
+                                    <img
+                                        src="/assets/images/testi.jpg"
+                                        alt="Budi"
+                                        class="rounded-circle"
+                                        style="width:50px;height:50px;object-fit:cover;"
+                                    >
+                                </div>
+                                <div>
+                                    <p class="mb-0 fw-bold">Budi Santoso</p>
+                                    <small class="text-light">Mahasiswa</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tambahkan slide lain jika perlu -->
+
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="testimonial-card h-100">
-          <div class="testimonial-card-body">
-            <h5 class="fw-bold mb-3">"The best Web Lost & Found"</h5>
-            <p class="text-light mb-4" style="line-height: 1.6;">Aku jadi bisa menemukan mantan aku yang hilang berkat website ini, terimakasih bah'il.</p>
-            <div class="d-flex align-items-center">
-              <div class="testimonial-avatar me-3">
-                <img src="https://ui-avatars.com/api/?name=Nouvail&background=DC3545&color=fff&size=128" alt="Nouvail" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-              </div>
-              <div>
-                <p class="mb-0 fw-bold">Nouvail suka jadi kaya</p>
-                <small class="text-light">Mahasiswa</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- ===================================================== -->
+
     </div>
-  </div>
 </section>
+
 
 <!-- Login Modal-->
 @push('scripts')
@@ -623,6 +754,65 @@
         }
     </script>
 @endpush
+
+    </div>
+      <div class="swiper-pagination mt-5"></div>
+    </div>
+    <!-- Button Testimonial -->
+    <div class="text-center mt-1 mb-4">
+      <button type="button" class="btn btn-danger btn-lg px-5 mt-3" data-bs-toggle="modal" data-bs-target="#testimonialModal">Testimonial</button>
+    </div>
+  </div>
+</section> 
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper(".testimonialSwiper", {
+    
+    centeredSlides: false,
+    // Tampilan Mobile (Default)
+    slidesPerView: 1,
+    spaceBetween: 30,
+    // Agar bisa digeser tanpa mentok (Infinite Loop)
+    loop: true,
+    
+    // Agar kursor berubah jadi tangan saat di-hover
+    grabCursor: true,
+
+    fade: true,
+    
+    // (Opsional) Slide otomatis jalan sendiri
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+
+    // Titik-titik navigasi di bawah
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
+    },
+
+    // Pengaturan Responsif (Tablet & Laptop)
+    breakpoints: {
+      640: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 2, // Tablet: tampil 2 kartu
+        spaceBetween: 30,
+      },
+      1024: {
+        slidesPerView: 3, // Laptop: tampil 3 kartu
+        spaceBetween: 30,
+      },
+    },
+  });
+</script>
+
 
 
 @endsection

@@ -1,0 +1,322 @@
+/* ============================================
+   CSS untuk Halaman Admin
+   File: public/css/admin.css
+   Menggunakan color palette yang sama dengan welcome.blade.php
+   ============================================ */
+
+:root {
+  --primary-red: #DC3545;
+  --dark-gray: #333;
+  --light-gray: #666;
+  --bg-light: #f8f9fa;
+  --text-muted: #6c757d;
+  --border-color: #e5e5e5;
+}
+
+/* ============================================
+   Admin Header
+   ============================================ */
+.admin-header {
+  background-color: var(--primary-red) !important;
+}
+
+/* ============================================
+   Breadcrumb Section
+   ============================================ */
+.breadcrumb-section {
+  background-color: #fff;
+}
+
+.breadcrumb-item a {
+  color: var(--primary-red);
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-item a:hover {
+  color: #c82333;
+}
+
+.breadcrumb-item.active {
+  color: var(--light-gray);
+}
+
+/* ============================================
+   Admin Content
+   ============================================ */
+.admin-content {
+  min-height: calc(100vh - 300px);
+  background-color: var(--bg-light);
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+}
+
+/* ============================================
+   Table Styles
+   ============================================ */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: var(--dark-gray);
+  border-bottom: 2px solid var(--border-color);
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.table-photo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 2px solid var(--border-color);
+}
+
+/* Status Badge */
+.badge {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #000;
+}
+
+.badge.bg-success {
+  background-color: #28a745 !important;
+  color: #fff;
+}
+
+/* Status Verifikasi Select */
+.status-verifikasi {
+  min-width: 150px;
+  font-size: 0.85rem;
+}
+
+.status-verifikasi:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+/* Action Buttons */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #000;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
+  color: #000;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-danger {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+/* ============================================
+   Search and Filter
+   ============================================ */
+.search-box {
+  display: flex;
+  align-items: center;
+}
+
+#searchInput {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+#searchInput:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+  outline: none;
+}
+
+#entriesPerPage {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+#entriesPerPage:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+  outline: none;
+}
+
+/* ============================================
+   Pagination
+   ============================================ */
+.pagination {
+  margin-bottom: 0;
+}
+
+.page-link {
+  color: var(--primary-red);
+  border-color: var(--border-color);
+}
+
+.page-link:hover {
+  color: #c82333;
+  background-color: #e9ecef;
+  border-color: var(--border-color);
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  color: #fff;
+}
+
+.page-item.disabled .page-link {
+  color: var(--text-muted);
+  background-color: #fff;
+  border-color: var(--border-color);
+}
+
+/* ============================================
+   Edit Form Section
+   ============================================ */
+.edit-form-section {
+  min-height: calc(100vh - 300px);
+  background-color: var(--bg-light);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.form-label {
+  color: var(--dark-gray);
+  margin-bottom: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.card-header {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  .table-photo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .search-box {
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  #searchInput {
+    width: 100% !important;
+  }
+
+  .d-flex.justify-content-md-end {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .d-flex.justify-content-md-end > * {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 1.25rem;
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 8px 5px;
+  }
+
+  .btn-sm {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+
+  .btn-sm i {
+    font-size: 0.8rem;
+  }
+
+  .status-verifikasi {
+    min-width: 120px;
+    font-size: 0.75rem;
+  }
+}
+

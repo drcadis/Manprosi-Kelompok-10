@@ -26,7 +26,11 @@ body {
 
 .hero-image-container {
   width: 100%;
+<<<<<<< Updated upstream
   height: 500px;
+=======
+  height: 300px;
+>>>>>>> Stashed changes
   overflow: hidden;
 }
 
@@ -38,21 +42,33 @@ body {
 }
 
 .hero-content-below {
+<<<<<<< Updated upstream
   background-color: #fff;
+=======
+  background-color: transparent;
+>>>>>>> Stashed changes
   padding: 40px 0;
 }
 
 .hero-title {
   font-size: 3rem;
   font-weight: 700;
+<<<<<<< Updated upstream
   color: #333;
+=======
+  color: #ffffff;
+>>>>>>> Stashed changes
   text-align: center;
   margin-bottom: 15px;
 }
 
 .hero-subtitle {
   font-size: 1.2rem;
+<<<<<<< Updated upstream
   color: #666;
+=======
+  color: #ffffff;
+>>>>>>> Stashed changes
   text-align: center;
   margin-bottom: 0;
 }
