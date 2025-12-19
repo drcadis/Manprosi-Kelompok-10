@@ -8,6 +8,10 @@ use App\Models\Items;
 class Kategori extends Model
 {
     protected $table = 'kategori';
+    protected $fillable = [
+        'nama_kategori',
+    ];
+
     public function items()
     {
         return $this->hasMany(Items::class);

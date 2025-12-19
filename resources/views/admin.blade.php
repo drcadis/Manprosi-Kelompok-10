@@ -94,9 +94,15 @@
           <h2 class="page-title mb-3">
             <i class="bi bi-clipboard-data me-2"></i>Laporan Barang
           </h2>
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLaporanModal">
-            <i class="bi bi-plus-circle me-2"></i>Entri Laporan
-          </button>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLaporanModal">
+              <i class="bi bi-plus-circle me-2"></i>Entri Laporan
+            </button>
+
+            <a href="{{ route('kategori.index') }}" class="btn btn-outline-secondary">
+              <i class="bi bi-tags me-2"></i>Kelola Kategori
+            </a>
+          </div>
         </div>
         <div class="col-md-6 text-md-end">
           <div class="d-flex align-items-center justify-content-md-end gap-3">
@@ -163,7 +169,7 @@
                           </select>
                         </td>
                         <td>
-                          <a href="{{ route('detail.barang', ['id' => $item->id]) }}" class="btn btn-warning btn-sm" title="Detail">
+                          <a href="{{ route('detail', ['id' => $item->id]) }}" class="btn btn-warning btn-sm" title="Detail">
                             <i class="bi bi-eye"></i> Detail
                           </a>
                           <a href="{{ route('admin.edit', ['id' => $item->id]) }}" class="btn btn-primary btn-sm" title="Edit">
@@ -216,7 +222,7 @@
                       href="{{ route('detail.barang', ['id' => $item->id]) }}"
                       Pastikan route detail.barang sudah menerima parameter {id}
                     --}}
-                    <a href="{{ route('detail.barang') }}" class="btn btn-warning btn-sm" title="Detail">
+                      <a href="{{ route('detail', ['id' => 1]) }}" class="btn btn-warning btn-sm" title="Detail">
                       <i class="bi bi-eye"></i> Detail
                     </a>
                     {{-- 
@@ -257,7 +263,7 @@
                     </select>
                   </td>
                   <td>
-                    <a href="{{ route('detail.barang') }}" class="btn btn-warning btn-sm" title="Detail">
+                    <a href="{{ route('detail', ['id' => 2]) }}" class="btn btn-warning btn-sm" title="Detail">
                       <i class="bi bi-eye"></i> Detail
                     </a>
                     <a href="{{ route('admin.edit', ['id' => 2]) }}" class="btn btn-primary btn-sm" title="Edit">
@@ -290,7 +296,7 @@
                     </select>
                   </td>
                   <td>
-                    <a href="{{ route('detail.barang') }}" class="btn btn-warning btn-sm" title="Detail">
+                    <a href="{{ route('detail', ['id' => 3]) }}" class="btn btn-warning btn-sm" title="Detail">
                       <i class="bi bi-eye"></i> Detail
                     </a>
                     <a href="{{ route('admin.edit', ['id' => 3]) }}" class="btn btn-primary btn-sm" title="Edit">
