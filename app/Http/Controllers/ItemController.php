@@ -54,7 +54,7 @@ class ItemController extends Controller
         $pathFoto = null;
         if ($request->hasFile('foto_barang')) {
             $pathFoto = $request->file('foto_barang')
-                               ->store('barang_hilang', 'public');
+                    ->store('barang_hilang', 'public');
         }
 
         // Simpan ke database

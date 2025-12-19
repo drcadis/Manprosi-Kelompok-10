@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Items;
 
 class Verification extends Model
 {
@@ -24,11 +25,11 @@ class Verification extends Model
     ];
 
     // HAPUS fungsi user() karena sudah tidak ada relasi ke tabel users
-    // public function user() { ... } 
+    // public function user() { ... }
 
     // Relasi ke Item tetap ada
     public function item()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Items::class, 'item_id');
     }
 }

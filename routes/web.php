@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\lookController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KategoriController;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -19,7 +20,8 @@ Route::get('/detail/{id}', [ItemController::class, 'show'])->name('detail');
 Route::get('/semua-barang', [ItemController::class, 'getAll'])->name('semua.barang');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    
+    // Resource routes for kategori management (admin)
+    Route::resource('kategori', KategoriController::class)->except(['show']);
 });
 
 
