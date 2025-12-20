@@ -49,11 +49,11 @@
             </button>
             <div class="category-tabs">
               <button class="category-tab active" data-category="all">All</button>
-              <button class="category-tab" data-category="ktm">KTM</button>
-              <button class="category-tab" data-category="dompet">Dompet</button>
-              <button class="category-tab" data-category="tas">Tas</button>
+              <button class="category-tab" data-category="kartu identitas">Kartu Identitas</button>
+              <button class="category-tab" data-category="tas & dompet">Tas & Dompet</button>
+              <button class="category-tab" data-category="dokumen & alat tulis">Dokumen & Alat Tulis</button>
               <button class="category-tab" data-category="elektronik">Elektronik</button>
-              <button class="category-tab" data-category="kunci">Kunci</button>
+              <button class="category-tab" data-category="aksesoris">Aksesoris</button>
               <button class="category-tab" data-category="others">Others</button>
             </div>
           </div>
