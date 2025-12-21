@@ -49,9 +49,14 @@
           <h2 class="page-title mb-3">
             <i class="bi bi-clipboard-data me-2"></i>Laporan Barang
           </h2>
-          <a href="{{ route('cari') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-2"></i>Entri Laporan (Publik)
-          </a>
+          <div class="d-flex gap-2">
+            <a href="{{ route('cari') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Entri Laporan
+            </a>
+
+            <a href="{{ route('kategori.index') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-tags me-2"></i>Kelola Kategori
+            </a>
         </div>
         <div class="col-md-6 text-md-end">
           <div class="d-flex align-items-center justify-content-md-end gap-3">
@@ -81,7 +86,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{-- LOOP DATA DINAMIS DARI DATABASE --}}
+{{-- LOOP DATA DINAMIS DARI DATABASE --}}
                 @forelse($allItems as $index => $item)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -111,14 +116,39 @@
                     </td>
                     <td>
                       <div class="d-flex gap-1">
-                          <a href="{{ route('detail', $item->id) }}" class="btn btn-warning btn-sm text-white" title="Lihat Detail">
+                          <a href="#" class="btn btn-warning btn-sm text-white" title="Lihat Detail">
                             <i class="bi bi-eye"></i>
+                          </a>
+
+                          <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-primary btn-sm" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+
+                          <form action="{{ route('admin.delete', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                  <i class="bi bi-trash"></i>
+                              </button>
+                          </form>
+                      </div>
+                    </td>
+                  </tr>
+                @empty
+                  <tr>
+                    <td colspan="9" class="text-center py-5">
+                      <div class="text-muted">
+                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                        Belum ada data laporan yang masuk.
+                      </div>
+                    </td>
+                  </tr>
+                @endforelse
                           </a>
                           
                           <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-primary btn-sm" title="Ubah Data">
                             <i class="bi bi-pencil"></i>
-                          </a>
-                          
+                          </a>                          
                           <form action="{{ route('admin.delete', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan!');">
                             @csrf
                             @method('DELETE')

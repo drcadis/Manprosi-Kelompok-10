@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LostItemController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ForgotController;
 // use App\Http\Controllers\FoundItemController; // <-- Controller teman (belum ada)
 
 /*
@@ -12,7 +14,6 @@ use App\Http\Controllers\LostItemController;
 | Web Routes
 |--------------------------------------------------------------------------
 */
-
 // ==========================================
 // 1. AUTHENTICATION
 // ==========================================
@@ -21,10 +22,12 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/login', [AuthController::class, 'showDashboard'])->name('login.form');
 Route::get('/register', [AuthController::class, 'showDashboard'])->name('register.form');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 // ==========================================
 // 2. HALAMAN UTAMA & UMUM
 // ==========================================
+Route::delete('/delete', [AuthController::class, 'delete'])->name('delete')->middleware('auth');
+Route::get('/cari', [ItemController::class, 'create'])->name('cari');
+Route::post('/cari', [ItemController::class, 'store'])->name('items.store');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // PERBAIKAN 1: Nama route diganti jadi 'cari' (bukan cari.index) agar welcome.blade.php tidak error
@@ -44,6 +47,16 @@ Route::prefix('kehilangan')->name('lost.')->group(function () {
     Route::get('/', [LostItemController::class, 'index'])->name('index');       
     Route::get('/lapor', [LostItemController::class, 'create'])->name('create'); 
     Route::post('/store', [LostItemController::class, 'store'])->name('store');  
+  
+Route::get('/forgot', [ForgotController::class, 'showForgot'])->name('password.request');
+Route::post('/forgot', [ForgotController::class, 'sendReset'])->name('password.email');
+
+Route::get('/reset/{token}', [ForgotController::class, 'showReset'])->name('password.reset');
+Route::post('/reset', [ForgotController::class, 'reset'])->name('password.update');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Resource routes for kategori management (admin)
+    Route::resource('kategori', KategoriController::class)->except(['show']);
 });
 
 // ==========================================

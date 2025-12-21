@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\Mime\Message;
 
 class AuthController extends Controller
 {
@@ -69,8 +68,6 @@ class AuthController extends Controller
         if (Auth::attempt($validator->validated(), $remember)) {
             $user = User::where('email', $validator->validated()['email'])->first();
 
-            return redirect('/')->with('login_success', 'Berhasil login');
-
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 'success',
@@ -78,6 +75,10 @@ class AuthController extends Controller
                     'user' => $user,
                 ], 200);
             }
+
+            return redirect('/')->with('login_success', 'Berhasil login');
+
+            
 
             $request->session()->regenerate();
             return redirect()->intended('home');
@@ -93,6 +94,21 @@ class AuthController extends Controller
             'email' => 'Email atau password salah',
             'password' => 'Email atau password salah',
         ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $user = Auth::user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')
+            ->with('success', 'Akun anda berhasil dihapus.');
     }
 
     public function logout(Request $request)

@@ -364,7 +364,7 @@
                                     Remember me
                                 </label>
                             </div>
-                            <a href="#" class="helper-text">Forgot Password?</a>
+                            <a href="{{ route('password.request') }}" class="helper-text">Forgot Password?</a>
                         </div>
 
                         <button type="submit" class="btn btn-custom-red mb-3">

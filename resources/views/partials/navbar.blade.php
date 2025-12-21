@@ -66,6 +66,17 @@
                     </button>
                   </form>
                 </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form method="POST" action="{{ route('delete') }}"
+                        onsubmit="return confirm('Yakin ingin menghapus akun? Semua data akan hilang!')">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="dropdown-item text-danger">
+                          Delete Account
+                      </button>
+                  </form>
+                </li>
               </ul>
             </div>
           @endauth

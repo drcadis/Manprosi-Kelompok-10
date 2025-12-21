@@ -17,6 +17,3 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::post('/lapor-hilang', [ItemController::class, 'store']);
-Route::get('/melihat-barang', [lookController::class, 'index']);
-Route::get('/melihat-barang/{id}', [lookController::class, 'show']);

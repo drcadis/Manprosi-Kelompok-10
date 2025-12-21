@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Verification;
-use App\Models\Item;
+use App\Models\Items;
 
 class VerificationController extends Controller
 {
@@ -82,9 +82,9 @@ class VerificationController extends Controller
 
         // status barang jadi 'returned' apabila diubah
         if ($request->status == 'approved') {
-            $item = Item::find($verification->item_id);
+            $item = Items::find($verification->item_id);
             if ($item) {
-                $item->status = 'returned'; 
+                $item->status_barang = 'Telah Ditemukan';
                 $item->save();
             }
         }
