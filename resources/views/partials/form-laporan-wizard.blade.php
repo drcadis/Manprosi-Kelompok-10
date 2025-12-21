@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data" id="laporanForm">
+        <form action="#" method="POST" enctype="multipart/form-data" id="laporanForm">
             @csrf
             <input type="hidden" name="tipe_laporan" id="tipeLaporan" value="Kehilangan Barang">
 
@@ -218,12 +218,29 @@
         }
 
         // Set tipe laporan if provided
+        // Set tipe laporan DAN Route Action if provided
         if (tipe) {
+            const form = document.getElementById('laporanForm');
+
             if (tipe === 'mencari') {
-            document.getElementById('tipeLaporan').value = 'Kehilangan Barang';
-        } else if (tipe === 'menemukan') {
-            document.getElementById('tipeLaporan').value = 'Kehilangan Pemilik';
-        }
+                // 1. Set Value untuk Database
+                document.getElementById('tipeLaporan').value = 'Kehilangan Barang';
+                
+                // 2. ARAHKAN KE CONTROLLER ANDA (LostItemController)
+                form.action = "{{ route('lost.store') }}"; 
+                
+                console.log("Jalur set ke: LostItemController");
+
+            } else if (tipe === 'menemukan') {
+                // 1. Set Value untuk Database
+                document.getElementById('tipeLaporan').value = 'Kehilangan Pemilik';
+                
+                // 2. ARAHKAN KE CONTROLLER TEMAN (FoundItemController)
+                // Pastikan route 'found.store' sudah ada di web.php, atau komentar dulu jika belum ada
+                form.action = "{{ route('found.store') }}"; 
+                
+                console.log("Jalur set ke: FoundItemController");
+            }
         }
 
         // Update progress indicator
