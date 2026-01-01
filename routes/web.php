@@ -7,7 +7,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ForgotController;
-// use App\Http\Controllers\FoundItemController; // <-- Controller teman (belum ada)
+use App\Http\Controllers\AdminController;
+// use App\Http\Controllers\FoundItemController; // <-- Controller yg(belum ada)
 
 /*
 |--------------------------------------------------------------------------
@@ -30,24 +31,25 @@ Route::get('/cari', [ItemController::class, 'create'])->name('cari');
 Route::post('/cari', [ItemController::class, 'store'])->name('items.store');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// PERBAIKAN 1: Nama route diganti jadi 'cari' (bukan cari.index) agar welcome.blade.php tidak error
+// PERBAIKAN 1: Nama route diganti jadi 'cari' (bukan cari.index) agar welcome.blade.php gak error
 Route::get('/cari', function () {
     $kategori = \App\Models\Kategori::all();
     return view('cari', compact('kategori'));
-})->name('cari'); 
+})->name('cari');
 
 Route::get('/detail/{id}', [ItemController::class, 'show'])->name('detail');
 Route::get('/semua-barang', [ItemController::class, 'getAll'])->name('semua.barang');
-Route::post('/cari', [ItemController::class, 'store'])->name('items.store'); 
+Route::post('/cari', [ItemController::class, 'store'])->name('items.store');
 
 // ==========================================
 // 3. FITUR "MENCARI BARANG" (ANDA)
 // ==========================================
 Route::prefix('kehilangan')->name('lost.')->group(function () {
-    Route::get('/', [LostItemController::class, 'index'])->name('index');       
-    Route::get('/lapor', [LostItemController::class, 'create'])->name('create'); 
-    Route::post('/store', [LostItemController::class, 'store'])->name('store');  
-  
+    Route::get('/', [LostItemController::class, 'index'])->name('index');
+    Route::get('/lapor', [LostItemController::class, 'create'])->name('create');
+    Route::post('/store', [LostItemController::class, 'store'])->name('store');
+});
+
 Route::get('/forgot', [ForgotController::class, 'showForgot'])->name('password.request');
 Route::post('/forgot', [ForgotController::class, 'sendReset'])->name('password.email');
 
@@ -62,9 +64,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // ==========================================
 // 4. FITUR "MENEMUKAN BARANG" (TEMAN)
 // ==========================================
-// PERBAIKAN 2: Kita buat route DUMMY (Palsu) dulu agar tidak error "Route not defined"
-// Nanti kalau teman sudah bikin controller, baru ganti baris ini.
-Route::post('/penemuan/store', function() {
+Route::post('/penemuan/store', function () {
     return "Fitur Penemuan Barang (Milik Teman) belum aktif.";
 })->name('found.store');
 
@@ -74,13 +74,22 @@ Route::post('/penemuan/store', function() {
 
 // Group Route Admin (Bisa dimasukkan ke middleware auth nantinya)
 Route::prefix('admin')->name('admin.')->group(function () {
-    
+
     // 1. DASHBOARD ADMIN
     // Mengambil data real dari database agar tabel tidak kosong
     Route::get('/', function () {
-        $allItems = \App\Models\Items::latest()->get(); 
-        return view('admin', compact('allItems'));
+        $allItems = \App\Models\Items::latest()->get();
+        $testimonials = \Illuminate\Support\Facades\DB::table('testimonials')->latest()->get();
+        return view('admin', compact('allItems', 'testimonials'));
     })->name('index'); // URL: /admin
+    Route::get('/feedback', function () {
+        $allItems = collect(); // ⬅️ KUNCI: agar blade tidak error
+        $testimonials = \Illuminate\Support\Facades\DB::table('testimonials')->latest()->get();
+        return view('admin', compact('allItems', 'testimonials'));
+    })->name('feedback');
+
+    // Route::get('/', [AdminController::class, 'laporan'])->name('laporan');
+    // Route::get('/feedback', [AdminController::class, 'feedback'])->name('feedback');
 
     // 2. FORM EDIT
     // Mengarah ke LostItemController function edit
@@ -93,7 +102,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // 4. PROSES DELETE
     // Mengarah ke LostItemController function destroy
     Route::delete('/delete/{id}', [LostItemController::class, 'destroy'])->name('delete');
-    
+
     // 5. Update Status (Opsional/AJAX)
     Route::post('/update-status', function () {
         return response()->json(['success' => true, 'message' => 'Status berhasil diupdate!']);
@@ -108,9 +117,7 @@ Route::post('/laporan/store', function () {
     return redirect()->route('cari')->with('success', 'Laporan berhasil dikirim!');
 })->name('laporan.store');
 
-Route::post('/testimonial/store', function () {
-    if (request()->ajax() || request()->wantsJson()) {
-        return response()->json(['success' => true, 'message' => 'Testimonial berhasil dikirim!']);
-    }
-    return redirect()->back()->with('success', 'Testimonial berhasil dikirim!');
-})->name('testimonial.store');
+// TESTIMONIAL CRUD (ADMIN & PUBLIC)
+Route::post('/testimonial/store', [App\Http\Controllers\TestimonialController::class, 'store'])->name('testimonial.store');
+Route::put('/testimonial/update/{id}', [App\Http\Controllers\TestimonialController::class, 'update'])->name('testimonial.update');
+Route::delete('/testimonial/delete/{id}', [App\Http\Controllers\TestimonialController::class, 'destroy'])->name('testimonial.destroy');

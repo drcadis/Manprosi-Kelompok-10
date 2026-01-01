@@ -63,6 +63,7 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -71,95 +72,101 @@ body {
 
 /* login & Regist */
 .modal-glass {
-            background: rgba(255, 255, 255, 0.1); /* Background transparan putih tipis */
-            backdrop-filter: blur(15px); /* Efek Blur di belakang card */
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.5); /* Border tipis putih */
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            color: white; /* Text default putih agar kontras */
-        }
+  background: rgba(255, 255, 255, 0.1);
+  /* Background transparan putih tipis */
+  backdrop-filter: blur(15px);
+  /* Efek Blur di belakang card */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  /* Border tipis putih */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  color: white;
+  /* Text default putih agar kontras */
+}
 
-        /* Judul Form (Sign In / Create Account) */
-        .glass-header {
-            font-weight: 700;
-            font-size: 2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+/* Judul Form (Sign In / Create Account) */
+.glass-header {
+  font-weight: 700;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
-        /* Custom Input Fields */
-        .form-control-glass {
-            background: rgba(255, 255, 255, 0.9); /* Input agak putih agar tulisan terbaca */
-            border: none;
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .form-control-glass:focus {
-            background: #fff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            outline: none;
-        }
+/* Custom Input Fields */
+.form-control-glass {
+  background: rgba(255, 255, 255, 0.9);
+  /* Input agak putih agar tulisan terbaca */
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #333;
+  margin-bottom: 15px;
+}
 
-        /* Warna Merah sesuai Request (#ed1e28) */
-        .btn-custom-red {
-            background-color: #ed1e28;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 25px; /* Rounded button */
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(237, 30, 40, 0.4);
-        }
+.form-control-glass:focus {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
 
-        .btn-custom-red:hover {
-            background-color: #c4121b;
-            color: white;
-            transform: translateY(-2px);
-        }
+/* Warna Merah sesuai Request (#ed1e28) */
+.btn-custom-red {
+  background-color: #ed1e28;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 25px;
+  /* Rounded button */
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(237, 30, 40, 0.4);
+}
 
-        /* Checkbox Custom */
-        .form-check-input:checked {
-            background-color: #ed1e28;
-            border-color: #ed1e28;
-        }
+.btn-custom-red:hover {
+  background-color: #c4121b;
+  color: white;
+  transform: translateY(-2px);
+}
 
-        /* Link Toggle (Login <-> Register) */
-        .auth-toggle-link {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .auth-toggle-link:hover {
-            color: #ed1e28;
-            text-decoration: underline;
-        }
-        
-        /* Helper Text (Forgot password, dll) */
-        .helper-text {
-            color: #eee;
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        
-        .helper-text:hover {
-            color: white;
-        }
+/* Checkbox Custom */
+.form-check-input:checked {
+  background-color: #ed1e28;
+  border-color: #ed1e28;
+}
 
-        /* Close button modal (X) custom warna putih */
-        .btn-close-white {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
+/* Link Toggle (Login <-> Register) */
+.auth-toggle-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.auth-toggle-link:hover {
+  color: #ed1e28;
+  text-decoration: underline;
+}
+
+/* Helper Text (Forgot password, dll) */
+.helper-text {
+  color: #eee;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.helper-text:hover {
+  color: white;
+}
+
+/* Close button modal (X) custom warna putih */
+.btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
 
 /* Card Styles */
 .card {
@@ -169,7 +176,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Instruction Cards */
@@ -194,7 +201,7 @@ body {
 
 .instruction-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .instruction-icon-wrapper {
@@ -213,7 +220,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .instruction-icon-box svg {
@@ -281,8 +288,6 @@ body {
   color: white;
 }
 
-<<<<<<< Updated upstream
-=======
 /* ============================================
    Horizontal Scroll Container untuk Cards
    ============================================ */
@@ -332,19 +337,19 @@ body {
   min-width: 500px;
 }
 
->>>>>>> Stashed changes
 /* card barang hilang */
 .card-wrapper {
   position: relative;
-/* Tinggi total card dikunci agar seragam */
-  height: 450px; 
+  /* Tinggi total card dikunci agar seragam */
+  height: 450px;
   margin-bottom: 30px;
   cursor: pointer;
 }
 
 /* Container Gambar (Latar Belakang) */
 .card-image-box {
-  width: 75%; /* Gambar mengambil 75% lebar dari kiri */
+  width: 75%;
+  /* Gambar mengambil 75% lebar dari kiri */
   height: 100%;
   border-radius: 20px 5px 5px 20px;
   overflow: hidden;
@@ -357,7 +362,8 @@ body {
 .card-image-box img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Mencegah gambar gepeng */
+  object-fit: cover;
+  /* Mencegah gambar gepeng */
   object-position: center;
 }
 
@@ -366,56 +372,61 @@ body {
   position: absolute;
   z-index: 2;
   top: 50%;
-  right: 0; /* Menempel ke kanan */
-  transform: translateY(-50%) translateX(35px); /* Menengahkan secara vertikal */
-  width: 65%; /* Lebar kartu putih */
+  right: 0;
+  /* Menempel ke kanan */
+  transform: translateY(-50%) translateX(35px);
+  /* Menengahkan secara vertikal */
+  width: 65%;
+  /* Lebar kartu putih */
   background-color: #ffffff;
   border-radius: 20px;
   padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Efek bayangan halus */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  /* Efek bayangan halus */
   transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .card-wrapper:hover .card-info-box {
-/* Transparansi turun jadi 40% */
-  opacity: 0.4; 
+  /* Transparansi turun jadi 40% */
+  opacity: 0.4;
   /* Opsional: Sedikit digeser ke kanan agar efeknya makin terasa */
-  transform: translateY(-50%) translateX(45px); 
+  transform: translateY(-50%) translateX(45px);
 }
 
 /* Styling Typography sesuai Gambar 2 */
 .text-req {
-  color: #ed1e28; /* Warna biru muda/teal sesuai gambar */
+  color: #ed1e28;
+  /* Warna biru muda/teal sesuai gambar */
 }
-        
-        .btn-red {
-            background-color: #ed1e28;
-            color: white;
-            border: none;
-            padding: 10px 0;
-            border-radius: 25px;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
-        }
 
-        .btn-teal:hover {
-            background-color: #b6252a;
-            color: white;
-        }
+.btn-red {
+  background-color: #ed1e28;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 25px;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.3s;
+}
 
-        .list-item-custom {
-            display: flex;
-            align-items: start;
-            margin-bottom: 12px;
-            color: #6c757d;
-            font-size: 0.95rem;
-        }
-        
-        .list-item-custom i {
-            margin-right: 10px;
-            font-size: 1.1rem;
-        }
+.btn-teal:hover {
+  background-color: #b6252a;
+  color: white;
+}
+
+.list-item-custom {
+  display: flex;
+  align-items: start;
+  margin-bottom: 12px;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.list-item-custom i {
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
 
 /* Section Spacing */
 section {
@@ -450,14 +461,11 @@ svg:hover {
   border-radius: 15px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
   transition: all 0.3s ease;
-<<<<<<< Updated upstream
-=======
-  height: 90%; 
-  min-height: 250px; 
+  height: 90%;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
->>>>>>> Stashed changes
 }
 
 .testimonial-card:hover {
@@ -468,13 +476,10 @@ svg:hover {
 
 .testimonial-card-body {
   padding: 1.5rem;
-<<<<<<< Updated upstream
-=======
-  flex: 1; /* Mengambil sisa ruang yang ada */
+  flex: 1;
+  /* Mengambil sisa ruang yang ada */
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
->>>>>>> Stashed changes
 }
 
 .testimonial-card-body h5 {
@@ -494,8 +499,6 @@ svg:hover {
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
-<<<<<<< Updated upstream
-=======
 /* Testimonial Carousel - Horizontal Scroll */
 .testimonial-carousel-wrapper {
   position: relative;
@@ -511,32 +514,37 @@ svg:hover {
   padding: 20px 0;
   scroll-behavior: smooth;
   /* Hide scrollbar completely */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
   /* Hide scrollbar untuk Chrome, Safari, Opera */
-  user-select: none; /* Prevent text selection during drag */
+  user-select: none;
+  /* Prevent text selection during drag */
   -webkit-user-select: none;
 }
 
 .testimonial-carousel-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
   width: 0;
   height: 0;
   background: transparent;
 }
 
 .swiper-pagination-bullet-active {
-    background-color: #dc3545 !important; 
-    opacity: 1;
-  }
+  background-color: #dc3545 !important;
+  opacity: 1;
+}
 
-  .swiper-pagination-bullet {
-    background-color: #666; 
-    opacity: 0.5;
-  }
+.swiper-pagination-bullet {
+  background-color: #666;
+  opacity: 0.5;
+}
 
 .testimonial-card-item {
-  flex: 0 0 calc(33.333% - 14px); /* 3 cards visible, dengan gap */
+  flex: 0 0 calc(33.333% - 14px);
+  /* 3 cards visible, dengan gap */
   min-width: 300px;
   max-width: 400px;
 }
@@ -544,7 +552,8 @@ svg:hover {
 /* Responsive: 2 cards on tablet */
 @media (max-width: 992px) {
   .testimonial-card-item {
-    flex: 0 0 calc(50% - 10px); /* 2 cards visible */
+    flex: 0 0 calc(50% - 10px);
+    /* 2 cards visible */
     min-width: 280px;
   }
 }
@@ -552,13 +561,13 @@ svg:hover {
 /* Responsive: 1 card on mobile */
 @media (max-width: 768px) {
   .testimonial-card-item {
-    flex: 0 0 calc(100% - 10px); /* 1 card visible */
+    flex: 0 0 calc(100% - 10px);
+    /* 1 card visible */
     min-width: 250px;
   }
 }
 
 
->>>>>>> Stashed changes
 /* Item Cards with Overlay */
 .card[style*="overflow: hidden"] {
   border-radius: 0.5rem;
@@ -645,8 +654,6 @@ footer a:hover {
   text-decoration: underline !important;
 }
 
-<<<<<<< Updated upstream
-=======
 /* Responsive Adjustments untuk Horizontal Scroll */
 @media (max-width: 768px) {
   .card-scroll-item {
@@ -672,17 +679,16 @@ footer a:hover {
   }
 }
 
->>>>>>> Stashed changes
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .hero-content {
     padding: 2rem !important;
   }
-  
+
   .display-4 {
     font-size: 2rem;
   }
-  
+
   .display-5 {
     font-size: 1.75rem;
   }
@@ -751,9 +757,12 @@ html {
 
 /* Carousel Dots Animation */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -768,7 +777,7 @@ body.modal-blur {
   overflow: hidden;
 }
 
-body.modal-blur > *:not(.modal):not(.modal-backdrop) {
+body.modal-blur>*:not(.modal):not(.modal-backdrop) {
   filter: blur(10px);
   transition: filter 0.3s ease;
 }
@@ -818,7 +827,7 @@ body.modal-blur > *:not(.modal):not(.modal-backdrop) {
 
 .login-title {
   font-size: 2.5rem !important;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 700 !important;
   letter-spacing: -0.5px;
