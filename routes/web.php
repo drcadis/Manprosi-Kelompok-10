@@ -47,7 +47,7 @@ Route::prefix('kehilangan')->name('lost.')->group(function () {
     Route::get('/', [LostItemController::class, 'index'])->name('index');       
     Route::get('/lapor', [LostItemController::class, 'create'])->name('create'); 
     Route::post('/store', [LostItemController::class, 'store'])->name('store');  
-  
+});
 Route::get('/forgot', [ForgotController::class, 'showForgot'])->name('password.request');
 Route::post('/forgot', [ForgotController::class, 'sendReset'])->name('password.email');
 

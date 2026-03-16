@@ -86,89 +86,64 @@
                 </tr>
               </thead>
               <tbody>
-{{-- LOOP DATA DINAMIS DARI DATABASE --}}
-                @forelse($allItems as $index => $item)
-                  <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>
-                      @if($item->foto_barang)
-                        <img src="{{ asset('storage/' . $item->foto_barang) }}" 
-                             alt="{{ $item->nama_barang }}" 
-                             class="table-photo" 
-                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                      @else
-                        <span class="text-muted small">No Image</span>
-                      @endif
-                    </td>
-                    <td>LAP-{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</td>
-                    <td>
-                      <span class="badge {{ $item->tipe_laporan == 'Kehilangan Barang' ? 'bg-warning text-dark' : 'bg-success' }}">
-                        {{ $item->tipe_laporan }}
+              {{-- LOOP DATA DINAMIS DARI DATABASE --}}
+              @forelse($allItems as $index => $item)
+                <tr>
+                  <td>{{ $loop->iteration }}</td>
+                  <td>
+                    @if($item->foto_barang)
+                      <img src="{{ asset('storage/' . $item->foto_barang) }}" 
+                          alt="{{ $item->nama_barang }}" 
+                          class="table-photo" 
+                          style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                    @else
+                      <span class="text-muted small">No Image</span>
+                    @endif
+                  </td>
+                  <td>LAP-{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</td>
+                  <td>
+                    <span class="badge {{ $item->tipe_laporan == 'Kehilangan Barang' ? 'bg-warning text-dark' : 'bg-success' }}">
+                      {{ $item->tipe_laporan }}
+                    </span>
+                  </td>
+                  <td>{{ $item->nama }}</td>
+                  <td>{{ $item->nama_barang }}</td>
+                  <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                  <td>
+                      <span class="badge {{ $item->status_barang == 'Ditemukan' ? 'bg-success' : 'bg-danger' }}">
+                          {{ $item->status_barang }}
                       </span>
-                    </td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->nama_barang }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                    <td>
-                        <span class="badge {{ $item->status_barang == 'Ditemukan' ? 'bg-success' : 'bg-danger' }}">
-                            {{ $item->status_barang }}
-                        </span>
-                    </td>
-                    <td>
-                      <div class="d-flex gap-1">
-                          <a href="#" class="btn btn-warning btn-sm text-white" title="Lihat Detail">
-                            <i class="bi bi-eye"></i>
-                          </a>
+                  </td>
+                  <td>
+                    <div class="d-flex gap-1">
+                        <a href="#" class="btn btn-warning btn-sm text-white" title="Lihat Detail">
+                          <i class="bi bi-eye"></i>
+                        </a>
 
-                          <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-primary btn-sm" title="Edit">
-                            <i class="bi bi-pencil"></i>
-                          </a>
+                        <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-primary btn-sm" title="Edit">
+                          <i class="bi bi-pencil"></i>
+                        </a>
 
-                          <form action="{{ route('admin.delete', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                                  <i class="bi bi-trash"></i>
-                              </button>
-                          </form>
-                      </div>
-                    </td>
-                  </tr>
-                @empty
-                  <tr>
-                    <td colspan="9" class="text-center py-5">
-                      <div class="text-muted">
-                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                        Belum ada data laporan yang masuk.
-                      </div>
-                    </td>
-                  </tr>
-                @endforelse
-                          </a>
-                          
-                          <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-primary btn-sm" title="Ubah Data">
-                            <i class="bi bi-pencil"></i>
-                          </a>                          
-                          <form action="{{ route('admin.delete', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan!');">
+                        <form action="{{ route('admin.delete', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus Data">
+                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
                                 <i class="bi bi-trash"></i>
                             </button>
-                          </form>
-                      </div>
-                    </td>
-                  </tr>
-                @empty
-                  <tr>
-                    <td colspan="9" class="text-center py-5">
-                      <div class="text-muted">
-                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                        Belum ada data laporan yang masuk.
-                      </div>
-                    </td>
-                  </tr>
-                @endforelse
+                        </form>
+                    </div>
+                  </td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="9" class="text-center py-5">
+                    <div class="text-muted">
+                      <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                      Belum ada data laporan yang masuk.
+                    </div>
+                  </td>
+                </tr>
+              @endforelse
               </tbody>
             </table>
           </div>
