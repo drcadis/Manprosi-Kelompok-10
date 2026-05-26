@@ -21,14 +21,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Create admin user if not exists
-        if (!User::where('email', 'admin@example.com')->exists()) {
-            User::create([
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
                 'name' => 'Admin',
-                'email' => 'admin@example.com',
-                'password' => bcrypt('secret'),
+                'password' => 'secret',
                 'role' => 'admin',
-            ]);
-        }
+            ]
+        );
     }
 }

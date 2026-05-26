@@ -60,6 +60,14 @@
         }
     </style>
 
+    @if (session('error'))
+        <div class="container mt-3">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
 
     <!-- Hero Section -->
     <section id="home" class="hero-section position-relative"
@@ -311,121 +319,7 @@
 
         </div>
 
-        {{-- ================= MODAL LOGIN & REGISTER ================= --}}
-        <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content modal-glass p-4">
-
-                    {{-- Close Button --}}
-                    <div class="position-absolute top-0 end-0 p-3">
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-
-                    {{-- ================= LOGIN ================= --}}
-                    <div id="loginSection">
-                        <h2 class="glass-header">Login</h2>
-                        <p class="text-center text-white-50 mb-4">
-                            Temukan & Kembalikan Barang
-                        </p>
-
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <div class="mb-3">
-                                <input type="email" name="email" class="form-control form-control-glass" placeholder="Email"
-                                    required>
-                            </div>
-
-                            <div class="mb-3 position-relative">
-                                <input type="password" name="password" id="loginPass"
-                                    class="form-control form-control-glass" placeholder="Password" required>
-                                <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
-                                    style="cursor:pointer;" onclick="togglePass('loginPass')"></i>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="rememberMe">
-                                    <label class="form-check-label text-white" for="rememberMe" style="font-size:0.9rem;">
-                                        Remember me
-                                    </label>
-                                </div>
-                                <a href="{{ route('password.request') }}" class="helper-text">Forgot Password?</a>
-                            </div>
-
-                            <button type="submit" class="btn btn-custom-red mb-3">
-                                Login
-                            </button>
-
-                            <div class="text-center">
-                                <span class="text-white-50" style="font-size:0.9rem;">
-                                    Don't have account?
-                                </span>
-                                <a onclick="switchForm('register')" class="auth-toggle-link fw-bold">
-                                    Register
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-
-                    {{-- ================= REGISTER ================= --}}
-                    <div id="registerSection" class="d-none">
-                        <h2 class="glass-header">Create Account</h2>
-
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-
-                            <div class="mb-3">
-                                <input type="text" name="name" class="form-control form-control-glass" placeholder="Name"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="email" name="email" class="form-control form-control-glass" placeholder="Email"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="password" name="password" id="regPass" class="form-control form-control-glass"
-                                    placeholder="Password" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="password" name="password_confirmation" class="form-control form-control-glass"
-                                    placeholder="Confirm Password">
-                            </div>
-
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="agreeTerms" required>
-                                <label class="form-check-label text-white" for="agreeTerms" style="font-size:0.85rem;">
-                                    Accept all terms & conditions
-                                </label>
-                            </div>
-
-                            <button type="submit" class="btn btn-custom-red mb-3">
-                                Create Account
-                            </button>
-
-                            <div class="text-center">
-                                <span class="text-white-50" style="font-size:0.9rem;">
-                                    Already have account?
-                                </span>
-                                <a onclick="switchForm('login')" class="auth-toggle-link fw-bold">
-                                    Login
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- Found Items Section -->
+        {{-- Found Items Section --}}
     <section class="py-5 bg-white" style="border-top: 1px solid #959597;">
         <div class="container">
 
@@ -596,52 +490,15 @@
             </div>
         </div>
     </section>
-    <!-- Login Modal-->
+    <!-- Swiper JS -->
     @push('scripts')
-
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script>
-            // Fungsi untuk mengganti tampilan Login <-> Register
-            function switchForm(target) {
-                const loginSection = document.getElementById('loginSection');
-                const registerSection = document.getElementById('registerSection');
-
-                // Efek fade sederhana menggunakan class Bootstrap d-none
-                if (target === 'register') {
-                    loginSection.classList.add('d-none');
-                    registerSection.classList.remove('d-none');
-                } else {
-                    registerSection.classList.add('d-none');
-                    loginSection.classList.remove('d-none');
-                }
-            }
-
-            // Fungsi opsional untuk melihat password (ikon mata)
-            function togglePass(inputId) {
-                const input = document.getElementById(inputId);
-                if (input.type === "password") {
-                    input.type = "text";
-                } else {
-                    input.type = "password";
-                }
-            }
-        </script>
-    @endpush
-
-    </div>
-    <div class="swiper-pagination mt-5"></div>
-    </div>
-    
-    </div>
-    </section>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper(".testimonialSwiper", {
-            centeredSlides: false,
-            // Tampilan Mobile (Default)
-            slidesPerView: 1,
-            spaceBetween: 30,
+            var swiper = new Swiper(".testimonialSwiper", {
+                centeredSlides: false,
+                // Tampilan Mobile (Default)
+                slidesPerView: 1,
+                spaceBetween: 30,
             // Agar bisa digeser tanpa mentok (Infinite Loop)
             loop: true,
             // Agar kursor berubah jadi tangan saat di-hover
@@ -680,15 +537,16 @@
         });
     </script>
 
-      @if(session('success'))
+      @if(session('success') || session('login_success') || session('register_success'))
     <script>
         Swal.fire({
         icon: 'success',
         title: 'Berhasil!',
-        text: '{{ session('success') }}',
+        text: @json(session('login_success') ?? session('register_success') ?? session('success')),
         timer: 2500,
         showConfirmButton: false
     });
     </script>
     @endif
+    @endpush
 @endsection

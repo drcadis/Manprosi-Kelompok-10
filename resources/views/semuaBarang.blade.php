@@ -49,12 +49,11 @@
             </button>
             <div class="category-tabs">
               <button class="category-tab active" data-category="all">All</button>
-              <button class="category-tab" data-category="kartu identitas">Kartu Identitas</button>
-              <button class="category-tab" data-category="tas & dompet">Tas & Dompet</button>
-              <button class="category-tab" data-category="dokumen & alat tulis">Dokumen & Alat Tulis</button>
-              <button class="category-tab" data-category="elektronik">Elektronik</button>
-              <button class="category-tab" data-category="aksesoris">Aksesoris</button>
-              <button class="category-tab" data-category="others">Others</button>
+              @foreach ($kategoris as $kategori)
+                <button class="category-tab" data-category="{{ $kategori->id }}">
+                  {{ $kategori->nama_kategori }}
+                </button>
+              @endforeach
             </div>
           </div>
         </div>
@@ -116,7 +115,7 @@
 
         @if($getAll->count())
             @foreach($getAll as $barang)
-                <div class="item-card" data-category="{{ strtolower($barang->kategori?->nama_kategori ?? '-' ) }}">
+                <div class="item-card" data-category="{{ $barang->id_kategori ?? '' }}">
                     <div class="item-image-wrapper">
                         <img 
                             src="{{ $barang->foto_barang 

@@ -13,11 +13,39 @@
   --border-color: #e5e5e5;
 }
 
+/* Ensure Navbar is Always Visible */
+nav.navbar {
+  position: relative !important;
+  z-index: 1030 !important;
+  visibility: visible !important;
+  display: block !important;
+  opacity: 1 !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 1rem 0 !important;
+}
+
+nav.navbar .container {
+  visibility: visible !important;
+  display: flex !important;
+  width: 100% !important;
+}
+
+nav.navbar * {
+  visibility: visible !important;
+}
+
 /* ============================================
    Admin Header
    ============================================ */
 .admin-header {
   background-color: var(--primary-red) !important;
+  margin-top: 0 !important;
 }
 
 /* ============================================

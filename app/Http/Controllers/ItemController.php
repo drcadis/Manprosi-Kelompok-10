@@ -90,9 +90,10 @@ class ItemController extends Controller
 
     public function getAll()
     {
-        $getAll = Items::latest()->paginate(12);
+        $getAll = Items::with('kategori')->latest()->paginate(12);
+        $kategoris = Kategori::orderBy('nama_kategori')->get();
 
-        return view('semuaBarang', compact('getAll'));
+        return view('semuaBarang', compact('getAll', 'kategoris'));
     }
     
     public function show($id)

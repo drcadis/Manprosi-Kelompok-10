@@ -8,6 +8,16 @@ use App\Models\Items;
 
 class VerificationController extends Controller
 {
+    // === 0. FUNGSI UNTUK MELIHAT DAFTAR KLAIM (GET) ===
+    public function index()
+    {
+        $verifications = Verification::with('item')->latest()->get();
+        return response()->json([
+            'message' => 'Daftar verifikasi berhasil diambil',
+            'data' => $verifications
+        ]);
+    }
+
     // === 1. FUNGSI UNTUK MENGAJUKAN KLAIM (POST) ===
     public function store(Request $request)
     {
@@ -93,5 +103,27 @@ class VerificationController extends Controller
             'message' => 'Status updated successfully',
             'data' => $verification
         ]);
+    }
+
+    // === 3. FUNGSI UNTUK MENGHAPUS KLAIM (DELETE) ===
+    public function destroy($id)
+    {
+        $verification = Verification::find($id);
+
+        if (!$verification) {
+            return response()->json(['message' => 'Data verification not found'], 404);
+        }
+
+        // Hapus foto-foto jika ada (Opsional, membersihkan storage)
+        if ($verification->identity_card_image) {
+            \Storage::disk('public')->delete($verification->identity_card_image);
+        }
+        if ($verification->proof_image) {
+            \Storage::disk('public')->delete($verification->proof_image);
+        }
+
+        $verification->delete();
+
+        return response()->json(['message' => 'Data verification berhasil dihapus']);
     }
 }

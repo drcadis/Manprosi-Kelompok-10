@@ -83,7 +83,7 @@
             <a id="btnKelolaLaporan" class="btn btn-light border d-none">
               <i class="bi bi-clipboard-data me-2"></i>Kelola Laporan
             </a>
-            <a href="{{ route('kategori.index') }}" class="btn btn-light border">
+            <a href="{{ route('admin.kategori.index') }}" class="btn btn-light border">
               <i class="bi bi-tags me-2"></i>Kelola Kategori
             </a>
             <button id="btnKelolaFeedback" class="btn btn-light border">
@@ -408,5 +408,6 @@
   });
 </script>
 @endif
+  @include('partials.auth-modal')
 </body>
 </html>

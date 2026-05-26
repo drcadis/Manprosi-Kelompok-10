@@ -10,11 +10,11 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $role): Response
     {
         if (!auth()->check()) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         if (auth()->user()->role !== $role) {
-            abort(403, 'Akses ditolak');
+            return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke halaman ini');
         }
 
         return $next($request);

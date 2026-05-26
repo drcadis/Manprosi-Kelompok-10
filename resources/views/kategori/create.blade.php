@@ -16,7 +16,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('kategori.store') }}" method="POST">
+            <form action="{{ route('admin.kategori.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Nama Kategori</label>
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('kategori.index') }}" class="btn btn-secondary me-2">Batal</a>
+                    <a href="{{ route('admin.kategori.index') }}" class="btn btn-secondary me-2">Batal</a>
                     <button class="btn btn-primary">Simpan</button>
                 </div>
             </form>

@@ -56,11 +56,6 @@ Route::post('/forgot', [ForgotController::class, 'sendReset'])->name('password.e
 Route::get('/reset/{token}', [ForgotController::class, 'showReset'])->name('password.reset');
 Route::post('/reset', [ForgotController::class, 'reset'])->name('password.update');
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    // Resource routes for kategori management (admin)
-    Route::resource('kategori', KategoriController::class)->except(['show']);
-});
-
 // ==========================================
 // 4. FITUR "MENEMUKAN BARANG" (TEMAN)
 // ==========================================
@@ -72,8 +67,8 @@ Route::post('/penemuan/store', function () {
 // 5. ADMIN (MENGELOLA DATA)
 // ==========================================
 
-// Group Route Admin (Bisa dimasukkan ke middleware auth nantinya)
-Route::prefix('admin')->name('admin.')->group(function () {
+// Group Route Admin dengan middleware auth dan role:admin
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // 1. DASHBOARD ADMIN
     // Mengambil data real dari database agar tabel tidak kosong
@@ -107,6 +102,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/update-status', function () {
         return response()->json(['success' => true, 'message' => 'Status berhasil diupdate!']);
     })->name('update-status');
+
+    // 6. KATEGORI MANAGEMENT
+    Route::resource('kategori', KategoriController::class)->except(['show']);
 });
 
 // Route Placeholder Laporan & Testimonial (Biarkan jika masih dipakai)
@@ -118,6 +116,11 @@ Route::post('/laporan/store', function () {
 })->name('laporan.store');
 
 // TESTIMONIAL CRUD (ADMIN & PUBLIC)
+// TESTIMONIAL CRUD - PROTECTED BY AUTH & ROLE
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::put('/testimonial/update/{id}', [App\Http\Controllers\TestimonialController::class, 'update'])->name('testimonial.update');
+    Route::delete('/testimonial/delete/{id}', [App\Http\Controllers\TestimonialController::class, 'destroy'])->name('testimonial.destroy');
+});
+
+// TESTIMONIAL STORE - PUBLIC (any user can submit)
 Route::post('/testimonial/store', [App\Http\Controllers\TestimonialController::class, 'store'])->name('testimonial.store');
-Route::put('/testimonial/update/{id}', [App\Http\Controllers\TestimonialController::class, 'update'])->name('testimonial.update');
-Route::delete('/testimonial/delete/{id}', [App\Http\Controllers\TestimonialController::class, 'destroy'])->name('testimonial.destroy');

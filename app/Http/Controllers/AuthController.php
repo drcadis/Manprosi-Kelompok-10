@@ -41,9 +41,8 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $validator->validated()['name'],
             'email' => $validator->validated()['email'],
-            'password' => Hash::make($validator->validated()['password']),
+            'password' => $validator->validated()['password'],
             'role' => 'user',
-            
         ]);
 
         if (request()->expectsJson()) {
@@ -76,12 +75,14 @@ class AuthController extends Controller
                 ], 200);
             }
 
-            return redirect('/')->with('login_success', 'Berhasil login');
-
-            
-
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            
+            // Redirect to admin panel if user is admin, otherwise to home
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.index')->with('login_success', 'Berhasil login sebagai admin');
+            }
+            
+            return redirect('/')->with('login_success', 'Berhasil login');
         }
 
         if ($request->expectsJson()) {

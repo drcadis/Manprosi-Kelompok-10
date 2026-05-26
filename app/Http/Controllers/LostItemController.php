@@ -58,7 +58,7 @@ class LostItemController extends Controller
 
         // SIMPAN KE DATABASE
         // Perhatikan: tipe_laporan kita paksa jadi 'Kehilangan Barang'
-        Items::create([
+        $item = Items::create([
             'nama'          => $request->nama,
             'no_telp'       => $request->no_telp,
             'nama_barang'   => $request->nama_barang,
@@ -70,6 +70,14 @@ class LostItemController extends Controller
             'tipe_laporan'  => 'Kehilangan Barang', // <--- HARDCODE DI SINI
             'status_barang' => 'Belum Ditemukan',
         ]);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Laporan kehilangan berhasil dibuat!',
+                'data' => $item
+            ], 201);
+        }
 
         // Redirect ke halaman index khusus kehilangan
         return redirect()->route('lost.index')->with('success', 'Laporan kehilangan berhasil dibuat!');
