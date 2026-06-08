@@ -59,9 +59,9 @@ Route::post('/reset', [ForgotController::class, 'reset'])->name('password.update
 // ==========================================
 // 4. FITUR "MENEMUKAN BARANG" (TEMAN)
 // ==========================================
-Route::post('/penemuan/store', function () {
-    return "Fitur Penemuan Barang (Milik Teman) belum aktif.";
-})->name('found.store');
+Route::prefix('penemuan')->name('found.')->group(function () {
+    Route::post('/store', [LostItemController::class, 'store'])->name('store');
+});
 
 // ==========================================
 // 5. ADMIN (MENGELOLA DATA)

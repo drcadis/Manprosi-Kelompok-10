@@ -43,7 +43,15 @@ class LostItemController extends Controller
             'id_kategori'   => 'required|exists:kategori,id', // Pastikan nama tabel kategori benar
             'tanggal'       => 'required|date',
             'deskripsi'     => 'required|string',
-            'foto_barang'   => 'nullable|image|mimes:jpeg,png,jpg|max:5048',
+            'tipe_laporan'  => 'required|in:Kehilangan Barang,Kehilangan Pemilik',
+            'foto_barang'   => 'nullable|image|mimetypes:image/jpeg,image/png|max:5048',
+        ],
+        [
+            'foto_barang.mimetypes' => 'File harus berupa gambar (JPG, PNG). File PDF atau format lain tidak diperbolehkan.',
+            'foto_barang.image' => 'File harus berupa gambar yang valid.',
+            'foto_barang.max' => 'Ukuran file tidak boleh lebih dari 5MB.',
+            'tipe_laporan.required' => 'Tipe laporan tidak boleh kosong.',
+            'tipe_laporan.in' => 'Tipe laporan tidak valid.',
         ]);
 
         if ($validator->fails()) {
@@ -53,11 +61,66 @@ class LostItemController extends Controller
         // Upload Foto
         $pathFoto = null;
         if ($request->hasFile('foto_barang')) {
-            $pathFoto = $request->file('foto_barang')->store('barang_hilang', 'public');
+            $file = $request->file('foto_barang');
+            $filePath = $file->getRealPath();
+            $originalName = $file->getClientOriginalName();
+            
+            // Validasi 1: Check Extension
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $fileExtension = strtolower($file->getClientOriginalExtension());
+            
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'File harus berupa gambar JPG atau PNG. Extension .' . $fileExtension . ' tidak diperbolehkan.'])
+                    ->withInput();
+            }
+            
+            // Validasi 2: Check Magic Bytes (File Signature)
+            $handle = fopen($filePath, 'r');
+            $fileHeader = fread($handle, 12);
+            fclose($handle);
+            
+            $validSignatures = [
+                'FF D8 FF',      // JPEG
+                '89 50 4E 47',   // PNG
+            ];
+            
+            $hexHeader = bin2hex($fileHeader);
+            $isValidSignature = false;
+            
+            foreach ($validSignatures as $sig) {
+                $sigHex = str_replace(' ', '', $sig);
+                if (strpos(strtoupper($hexHeader), $sigHex) === 0) {
+                    $isValidSignature = true;
+                    break;
+                }
+            }
+            
+            if (!$isValidSignature) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'File tidak valid. Hanya gambar JPG dan PNG yang diperbolehkan. File PDF atau file yang di-rename tidak diterima.'])
+                    ->withInput();
+            }
+            
+            // Validasi 3: Check MIME type sebagai layer tambahan
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $filePath);
+            finfo_close($finfo);
+            
+            if (!in_array($mimeType, ['image/jpeg', 'image/png'])) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'Tipe file tidak valid. MIME type: ' . $mimeType])
+                    ->withInput();
+            }
+            
+            $pathFoto = $file->store('barang_hilang', 'public');
         }
 
         // SIMPAN KE DATABASE
-        // Perhatikan: tipe_laporan kita paksa jadi 'Kehilangan Barang'
+        // Gunakan tipe_laporan dari request (form wizard meng-setnya menjadi
+        // 'Kehilangan Barang' atau 'Kehilangan Pemilik')
+        $tipeLaporan = $request->input('tipe_laporan', 'Kehilangan Barang');
+
         $item = Items::create([
             'nama'          => $request->nama,
             'no_telp'       => $request->no_telp,
@@ -67,7 +130,7 @@ class LostItemController extends Controller
             'tanggal'       => $request->tanggal,
             'id_kategori'   => $request->id_kategori,
             'deskripsi'     => $request->deskripsi,
-            'tipe_laporan'  => 'Kehilangan Barang', // <--- HARDCODE DI SINI
+            'tipe_laporan'  => $tipeLaporan,
             'status_barang' => 'Belum Ditemukan',
         ]);
 
@@ -110,13 +173,18 @@ class LostItemController extends Controller
             'nama_barang'   => 'required|string',
             'lokasi'        => 'required|string',
             'status_barang' => 'required|string',
-            'foto_barang'   => 'nullable|image|max:5048',
+            'foto_barang'   => 'nullable|image|mimetypes:image/jpeg,image/png|max:5048',
             // Field tambahan dari form (sesuaikan dengan nama di input form)
             'no_telp'       => 'nullable|string',
             'email'         => 'nullable|email',
             'fakultas'      => 'nullable|string',
             'program_studi' => 'nullable|string',
             'status_verifikasi' => 'nullable|string',
+        ],
+        [
+            'foto_barang.mimetypes' => 'File harus berupa gambar (JPG, PNG). File PDF atau format lain tidak diperbolehkan.',
+            'foto_barang.image' => 'File harus berupa gambar yang valid.',
+            'foto_barang.max' => 'Ukuran file tidak boleh lebih dari 5MB.',
         ]);
 
         // Jika validasi gagal, kembalikan dengan error agar ketahuan
@@ -129,12 +197,66 @@ class LostItemController extends Controller
 
         // 3. Cek Upload Foto Baru
         if ($request->hasFile('foto_barang')) {
+            $file = $request->file('foto_barang');
+            $filePath = $file->getRealPath();
+            
+            // Validasi 1: Check Extension
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $fileExtension = strtolower($file->getClientOriginalExtension());
+            
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'File harus berupa gambar JPG atau PNG. Extension .' . $fileExtension . ' tidak diperbolehkan.'])
+                    ->withInput()
+                    ->with('error', 'Upload Gambar Gagal!');
+            }
+            
+            // Validasi 2: Check Magic Bytes (File Signature)
+            $handle = fopen($filePath, 'r');
+            $fileHeader = fread($handle, 12);
+            fclose($handle);
+            
+            $validSignatures = [
+                'FF D8 FF',      // JPEG
+                '89 50 4E 47',   // PNG
+            ];
+            
+            $hexHeader = bin2hex($fileHeader);
+            $isValidSignature = false;
+            
+            foreach ($validSignatures as $sig) {
+                $sigHex = str_replace(' ', '', $sig);
+                if (strpos(strtoupper($hexHeader), $sigHex) === 0) {
+                    $isValidSignature = true;
+                    break;
+                }
+            }
+            
+            if (!$isValidSignature) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'File tidak valid. Hanya gambar JPG dan PNG yang diperbolehkan. File PDF atau file yang di-rename tidak diterima.'])
+                    ->withInput()
+                    ->with('error', 'Upload Gambar Gagal!');
+            }
+            
+            // Validasi 3: Check MIME type sebagai layer tambahan
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $filePath);
+            finfo_close($finfo);
+            
+            if (!in_array($mimeType, ['image/jpeg', 'image/png'])) {
+                return redirect()->back()
+                    ->withErrors(['foto_barang' => 'Tipe file tidak valid. MIME type: ' . $mimeType])
+                    ->withInput()
+                    ->with('error', 'Upload Gambar Gagal!');
+            }
+            
             // Hapus foto lama
             if ($item->foto_barang && \Storage::exists('public/' . $item->foto_barang)) {
                 \Storage::delete('public/' . $item->foto_barang);
             }
             // Simpan foto baru
-            $pathFoto = $request->file('foto_barang')->store('barang_hilang', 'public');
+            $pathFoto = $file->store('barang_hilang', 'public');
             $item->foto_barang = $pathFoto;
         }
 

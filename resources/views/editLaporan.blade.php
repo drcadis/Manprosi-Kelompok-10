@@ -128,7 +128,7 @@
                     <label class="form-label fw-bold">Status Barang</label>
                     <select class="form-select" name="status_barang">
                       <option value="Belum Ditemukan" {{ $item->status_barang == 'Belum Ditemukan' ? 'selected' : '' }}>Belum Ditemukan</option>
-                      <option value="Ditemukan" {{ $item->status_barang == 'Ditemukan' ? 'selected' : '' }}>Ditemukan</option>
+                      <option value="Telah Ditemukan" {{ $item->status_barang == 'Telah Ditemukan' ? 'selected' : '' }}>Ditemukan</option>
                     </select>
                   </div>
 

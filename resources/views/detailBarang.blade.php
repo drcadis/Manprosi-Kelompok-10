@@ -56,7 +56,7 @@
             <!-- Status Badge -->
             <div class="mb-3">
               <span class="badge 
-                {{ $item->status_barang == 'ditemukan' ? 'bg-success' : 'bg-warning text-dark' }}">
+                {{ $item->status_barang == 'Telah Ditemukan' ? 'bg-success' : 'bg-warning text-dark' }}">
                 {{ ucfirst($item->status_barang) }}
               </span>
             </div>

@@ -241,6 +241,13 @@
                 
                 console.log("Jalur set ke: FoundItemController");
             }
+
+            // Update form titles immediately when tipe is selected
+            try {
+                updateFormTitles(tipe);
+            } catch (e) {
+                console.warn('updateFormTitles unavailable', e);
+            }
         }
 
         // Update progress indicator
@@ -357,6 +364,31 @@
             return false;
         }
 
+        // Validasi file foto jika ada
+        const fotoInput = document.getElementById('fotoBarang');
+        if (fotoInput && fotoInput.files.length > 0) {
+            const file = fotoInput.files[0];
+            const allowedExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const maxFileSize = 5 * 1024 * 1024; // 5MB
+            
+            // Check extension
+            if (!allowedExtensions.includes(fileExtension)) {
+                e.preventDefault();
+                alert('❌ File tidak diperbolehkan!\nHanya JPG dan PNG yang diterima.\nAnda mengunggah: .' + fileExtension);
+                fotoInput.value = '';
+                document.getElementById('fileName').textContent = '';
+                return false;
+            }
+            
+            // Check file size
+            if (file.size > maxFileSize) {
+                e.preventDefault();
+                alert('❌ File terlalu besar!\nUkuran maksimal: 5MB\nUkuran file Anda: ' + (file.size / (1024 * 1024)).toFixed(2) + 'MB');
+                return false;
+            }
+        }
+
         // Prevent default form submission
         e.preventDefault();
 
@@ -383,8 +415,13 @@
                     // If response is not JSON (redirect), still show success
                     return { success: true };
                 });
+            } else if (response.status === 422) {
+                // Validation error from server
+                return response.json().then(data => {
+                    throw { validation: true, errors: data.errors };
+                });
             }
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok - Status: ' + response.status);
         })
         .then(data => {
             // Show success popup
@@ -403,7 +440,17 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengunggah laporan. Silakan coba lagi.');
+            
+            // Handle validation errors
+            if (error.validation && error.errors) {
+                let errorMsg = '❌ Validasi Gagal:\n\n';
+                for (const field in error.errors) {
+                    errorMsg += error.errors[field].join('\n') + '\n';
+                }
+                alert(errorMsg);
+            } else {
+                alert('❌ Terjadi kesalahan saat mengunggah laporan. Silakan coba lagi.');
+            }
         })
         .finally(() => {
             // Reset button state

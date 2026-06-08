@@ -139,7 +139,7 @@
                       @php
                         $statusClass = 'bg-secondary';
                         $statusText = 'Belum Terverifikasi';
-                        if ($item->status_barang == 'Ditemukan') {
+                        if ($item->status_barang == 'Telah Ditemukan') {
                           $statusClass = 'bg-success';
                           $statusText = 'Terverifikasi';
                         } elseif ($item->status_barang == 'Ditolak') {
@@ -150,9 +150,9 @@
                       {{-- NOTE: Karena field database terbatas, saya gunakan status_barang sebagai proxy.
                       Atau bisa hardcode dropdown select seperti di gambar jika ingin fitur update status ajax --}}
                       <select class="form-select form-select-sm" style="width: 140px;">
-                        <option value="Belum Terverifikasi" {{ $item->status_barang != 'Ditemukan' ? 'selected' : '' }}>
+                        <option value="Belum Terverifikasi" {{ $item->status_barang != 'Telah Ditemukan' ? 'selected' : '' }}>
                           Belum Terverifikasi</option>
-                        <option value="Terverifikasi" {{ $item->status_barang == 'Ditemukan' ? 'selected' : '' }}>
+                        <option value="Terverifikasi" {{ $item->status_barang == 'Telah Ditemukan' ? 'selected' : '' }}>
                           Terverifikasi</option>
                         <option value="Tertolak">Tertolak</option>
                       </select>
