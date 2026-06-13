@@ -227,7 +227,8 @@
       });
     });
   </script>
-  
+    @include('partials.auth-modal')
+
 </body>
 </html>
 

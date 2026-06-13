@@ -52,7 +52,12 @@ class AuthController extends Controller
                 'user' => $user,
             ], 201);
         }
-        return redirect()->route('home')->with('register_success', 'Akun Berhasil Dibuat, Silahkan Login');
+
+        // Otomatis login setelah register berhasil
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return redirect()->route('home')->with('register_success', 'Akun Berhasil Dibuat & Anda Berhasil Login!');
     }
 
     public function login(Request $request)
